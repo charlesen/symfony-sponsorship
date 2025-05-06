@@ -59,6 +59,8 @@ final class SecurityController extends AbstractController
 
             // render a "Login link is sent!" page
             $this->addFlash('success', $translator->trans('Login link sent!'));
+
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('security/login.html.twig');
