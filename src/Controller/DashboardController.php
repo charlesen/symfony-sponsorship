@@ -12,11 +12,5 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
-    public function index(Notifier $notifier): Response
-    {
-        $notifier->notify($this->getUser(), 'Hello World', 'Hello World');
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-        ]);
-    }
+    public function index(Notifier $notifier): Response {}
 }
