@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center px-4 py-8 min-h-screen">
+    <div class="card w-full max-w-md bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h1 class="card-title text-2xl mb-4">{{ 'Please log in'|trans }}</h1>
+            <form action="{{ path('login') }}" method="POST" class="flex flex-col gap-4">
+                <label class="form-control w-full">
+                    <span class="label-text mb-1">{{ 'Email'|trans }}</span>
+                    <input type="email" name="email" id="email" placeholder="name@email.com" class="input input-bordered w-full" required />
+                </label>
+                <button type="submit" class="btn btn-primary w-full">{{ 'Login'|trans }}</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
