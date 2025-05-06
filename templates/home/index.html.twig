@@ -25,4 +25,35 @@
 </div>
     </div>
 </div>
+
+<!-- About Section -->
+<section id="about" class="my-16 flex justify-center">
+    <div class="card w-full max-w-2xl bg-base-100 shadow-xl dark:bg-neutral-900">
+        <div class="card-body">
+            <h3 class="card-title text-2xl text-neutral dark:text-white mb-2">{{ 'About me'|trans }}</h3>
+            <p class="text-neutral-600 dark:text-neutral-300">
+                {{ "I'm Charles EDOU NZE, a passionate developer and writer. I love building tools that empower people and sharing knowledge through my books and open source projects."|trans }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="my-8 flex justify-center">
+    <div class="card w-full max-w-2xl bg-base-100 shadow-xl dark:bg-neutral-900">
+        <div class="card-body">
+            <h3 class="card-title text-2xl text-neutral dark:text-white mb-2">{{ 'Contact'|trans }}</h3>
+            <p class="mb-4 text-neutral-600 dark:text-neutral-300">
+                {{ "You can reach me directly by email using the form below."|trans }}
+            </p>
+            <form class="flex flex-col gap-2">
+                <input type="text" class="input input-bordered" placeholder="Name" required>
+                <input type="email" class="input input-bordered" placeholder="Email" required>
+                <textarea class="textarea textarea-bordered" placeholder="Message" required></textarea>
+                <button type="submit" class="btn btn-primary">{{ 'Send'|trans }}</button>
+            </form>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

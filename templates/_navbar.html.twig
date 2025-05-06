@@ -1,8 +1,8 @@
 {# Menu list #}
 {% set menu = [
-    {'route': 'home', 'label': 'Home'},
-    {'route': 'about', 'label': 'About me'},
-    {'route': 'contact', 'label': 'Contact'},
+    {'route': 'home', 'label': 'Home', 'hash': ''},
+    {'route': 'home', 'label': 'About me', 'hash': '#about'},
+    {'route': 'home', 'label': 'Contact', 'hash': '#contact'},
 ] %}
 
 
@@ -16,7 +16,7 @@
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         {% for item in menu %}
-          <li><a href="{{ path(item.route, {'_locale': app.request.locale}) }}">{{ item.label|trans }}</a></li>
+          <li><a href="{{ path(item.route, {'_locale': app.request.locale}) }}{{ item.hash }}">{{ item.label|trans }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -25,7 +25,7 @@
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       {% for item in menu %}
-        <li><a href="{{ path(item.route, {'_locale': app.request.locale}) }}">{{ item.label|trans }}</a></li>
+        <li><a href="{{ path(item.route, {'_locale': app.request.locale}) }}{{ item.hash }}">{{ item.label|trans }}</a></li>
       {% endfor %}
     </ul>
   </div>

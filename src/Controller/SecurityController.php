@@ -35,6 +35,11 @@ final class SecurityController extends AbstractController
             $email = $request->getPayload()->get('email');
             $user = $userRepository->findOneBy(['email' => $email]);
 
+            if (!$user) {
+                $this->addFlash('error', $translator->trans('It looks like you do not have an account'));
+                return $this->redirectToRoute('register');
+            }
+
             $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
 
             // create a notification based on the login link details
