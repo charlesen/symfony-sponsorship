@@ -20,11 +20,11 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="min-h-screen flex flex-col">
         {% block body %}
             {% include '_navbar.html.twig' %}
-            <main class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-            {% include '_flash.html.twig' %}
+            <main class="flex-1 py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+                {% include '_flash.html.twig' %}
                 {% block content %}{% endblock %}
             </main>
             {% include '_footer.html.twig' %}
