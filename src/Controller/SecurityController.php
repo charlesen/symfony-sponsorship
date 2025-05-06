@@ -58,7 +58,7 @@ final class SecurityController extends AbstractController
             }
 
             // render a "Login link is sent!" page
-            $this->addFlash('success', $translator->trans('Login link sent!'));
+            $this->addFlash('success', $translator->trans('Login link sent ! Please check your email'));
 
             return $this->redirectToRoute('login');
         }
