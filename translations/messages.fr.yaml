@@ -42,15 +42,23 @@
 "Too many failed login attempts, please try again later.": "Trop de tentatives de connexion échouées, veuillez réessayer plus tard."
 "Invalid or expired login link.": "Lien de connexion invalide ou expiré."
 
+# Navigation
+"About me": "A propos de moi"
+"Contact": "Contact"
+
 # --- Application ---
 "Please log in": "Veuillez vous connecter"
 "Email": "E-mail"
 "Firstname": "Prénom"
 "Login": "Connexion"
 "All right reserved": "Tous droits réservés"
-"Contact": "Contact"
 "Home": "Accueil"
 "Register": "Inscription"
 "Already registered?": "Déjà inscrit ?"
 "Register here": "Inscrivez-vous ici"
 "Connect here": "Connectez-vous ici"
+"You don't have an account ?": "Vous n'avez pas encore de compte ?"
+
+"Buy now": "Achetez-le dès maintenant"
+"My new book is now available on Amazon": "Mon nouveau livre est disponible sur Amazon"
+"I am very happy to announce that my new book is now available on Amazon": "Je suis heureux de vous annoncer que mon nouveau livre est disponible sur Amazon"

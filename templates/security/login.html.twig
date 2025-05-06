@@ -13,8 +13,8 @@
                 <button type="submit" class="btn btn-primary w-full">{{ 'Login'|trans }}</button>
             </form>
             <div class="mt-4 text-center">
-                <span class="text-sm">{{ "Vous n'avez pas encore de compte ?"|trans }}
-                    <a href="{{ path('register') }}" class="link link-primary">{{ 'Inscrivez-vous ici'|trans }}</a>
+                <span class="text-sm">{{ "You don't have an account ?"|trans }}
+                    <a href="{{ path('register', {'_locale': app.request.locale}) }}" class="link link-primary">{{ 'Register here'|trans }}</a>
                 </span>
             </div>
         </div>

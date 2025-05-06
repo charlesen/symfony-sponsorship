@@ -11,6 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 
+#[Route('/{_locale}')]
 final class RegisterController extends AbstractController
 {
     #[Route('/register', name: 'register')]
