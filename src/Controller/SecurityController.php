@@ -29,6 +29,7 @@ final class SecurityController extends AbstractController
         Request $request,
         TranslatorInterface $translator
     ): Response {
+
         if ($request->isMethod('POST')) {
             $email = $request->getPayload()->get('email');
             $user = $userRepository->findOneBy(['email' => $email]);
@@ -38,13 +39,17 @@ final class SecurityController extends AbstractController
             // create a notification based on the login link details
             $notification = new LoginLinkNotification(
                 $loginLinkDetails,
-                $translator->trans('Login link') // email subject
+                $translator->trans('Application login link') // email subject
             );
             // create a recipient for this user
             $recipient = new Recipient($user->getEmail());
 
             // send the notification to the user
-            $notifier->send($notification, $recipient);
+            try {
+                $notifier->send($notification, $recipient);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $translator->trans('Login link could not be sent!'));
+            }
 
             // render a "Login link is sent!" page
             $this->addFlash('success', $translator->trans('Login link sent!'));
