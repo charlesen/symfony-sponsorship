@@ -13,6 +13,7 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/{_locale}')]
 final class SecurityController extends AbstractController
 {
     #[Route('/login_check', name: 'login_check')]
@@ -55,6 +56,6 @@ final class SecurityController extends AbstractController
             $this->addFlash('success', $translator->trans('Login link sent!'));
         }
 
-        return $this->render('security/request_login_link.html.twig');
+        return $this->render('security/login.html.twig');
     }
 }

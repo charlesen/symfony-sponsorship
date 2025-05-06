@@ -24,6 +24,11 @@
             </div>
             <button type="submit" class="btn btn-primary w-full mt-2">{{ 'Register'|trans }}</button>
             {{ form_end(form) }}
+<div class="mt-4 text-center">
+    <span class="text-sm">{{ "Déjà inscrit ?"|trans }}
+        <a href="{{ path('login') }}" class="link link-primary">{{ 'Connectez-vous ici'|trans }}</a>
+    </span>
+</div>
         </div>
     </div>
 </div>

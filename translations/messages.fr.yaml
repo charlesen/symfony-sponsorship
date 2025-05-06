@@ -45,8 +45,12 @@
 # --- Application ---
 "Please log in": "Veuillez vous connecter"
 "Email": "E-mail"
+"Firstname": "Prénom"
 "Login": "Connexion"
 "All right reserved": "Tous droits réservés"
 "Contact": "Contact"
 "Home": "Accueil"
 "Register": "Inscription"
+"Already registered?": "Déjà inscrit ?"
+"Register here": "Inscrivez-vous ici"
+"Connect here": "Connectez-vous ici"
