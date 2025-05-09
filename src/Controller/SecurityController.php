@@ -10,7 +10,7 @@ use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
-use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
+use App\Notifier\CustomLoginLinkNotification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/{_locale}')]
@@ -43,7 +43,7 @@ final class SecurityController extends AbstractController
             $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
 
             // create a notification based on the login link details
-            $notification = new LoginLinkNotification(
+            $notification = new CustomLoginLinkNotification(
                 $loginLinkDetails,
                 $translator->trans('Application login link') // email subject
             );

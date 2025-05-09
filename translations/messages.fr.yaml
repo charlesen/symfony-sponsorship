@@ -1,6 +1,13 @@
 # Traductions personnalisées pour les messages d'interface
 
 # Flashs Magic Link
+"Login to your account": "Connectez-vous à votre compte"
+"Hello": "Bonjour"
+"To log in to your account, simply click the link below:": "Pour vous connecter à votre compte, cliquez simplement sur le lien ci-dessous :"
+"Login now": "Se connecter maintenant"
+"This link is valid for": "Ce lien est valable jusqu'à"
+"If you did not request this, you can ignore this email.": "Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email."
+
 "Login link sent ! Please check your email": "Lien de connexion envoyé ! Veuillez vérifier votre email."
 "Login link could not be sent!": "Le lien de connexion n'a pas pu être envoyé !"
 "Application login link": "Lien de connexion à l'application"
@@ -67,10 +74,7 @@
 "I'm Charles EDOU NZE, a passionate developer and writer. I love building tools that empower people and sharing knowledge through my books and open source projects.": "Je m'appelle Charles EDOU NZE, un développeur et écrivain passionné. J'aime construire des outils qui emploient les gens et partager des connaissances à travers mes livres et mes projets open source."
 
 # Contact
-"You can reach me directly by email using the form below.": "Vous pouvez me joindre directement par email en utilisant le formulaire ci-dessous."
-"Name": "Nom"
-"Message": "Message"
-"Send": "Envoyer"
+"Stay in touch on social media": "Restons en contact sur les réseaux sociaux"
 
 # Register
 "It looks like you do not have an account": "Il semble que vous n'ayez pas de compte"
