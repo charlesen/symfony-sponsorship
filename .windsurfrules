@@ -1,0 +1,14 @@
+# Core System Components
+
+- The application is based on symfony framework
+- The main application logic is in src/.
+
+# Symfony Livecomponent (https://ux.symfony.com/live-component)
+
+- Components logic are in src/Twig/Components folder
+- Components view are in templates/components/ComponentName/ComponentName.html.twig (Naming in Pascal case)
+
+# Frontend Code Structure
+
+- Styles for the interface are in assets/styles/app.css, and you can as css style files as possible (assets/styles/form.css, assets/styles/email.css, ...).
+- The project use stimulus controller for frontend interaction

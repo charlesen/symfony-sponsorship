@@ -6,11 +6,13 @@ use App\Repository\PageRepository;
 use App\Trait\Timestampable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Trait\Sluggable;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Page
 {
+    use Sluggable;
     use Timestampable;
 
     #[ORM\Id]
@@ -67,4 +69,6 @@ class Page
 
         return $this;
     }
+
+
 }

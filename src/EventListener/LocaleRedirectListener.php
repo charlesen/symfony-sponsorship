@@ -21,7 +21,7 @@ final class LocaleRedirectListener
         $supportedLocales = ['fr', 'en'];
 
         // Ne pas rediriger les assets ou outils de debug
-        if (preg_match('#^/(build|_wdt|_profiler|assets|favicon|robots)($|/)#', $path)) {
+        if (preg_match('#^/(build|_wdt|_profiler|assets|favicon|robots|logout)($|/)#', $path)) {
             return;
         }
 
