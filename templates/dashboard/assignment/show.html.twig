@@ -1,16 +1,16 @@
-{% extends '@Dashboard/layout.html.twig' %}
+{% extends 'dashboard/layout.html.twig' %}
 
-{% block title %}Détails de l'Assignment{% endblock %}
+{% block title %}{{ 'Assignment details'|trans }}{% endblock %}
 
 {% block content %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Détails de l'Assignment</h1>
+        <h1 class="h2">{{ 'Assignment details'|trans }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <a href="{{ path('dashboard_assignment_edit', {'id': assignment.id}) }}" class="btn btn-sm btn-outline-secondary me-2">
-                <i class="bi bi-pencil"></i> Modifier
+                <i class="bi bi-pencil"></i> {{ 'Edit'|trans }}
             </a>
             <a href="{{ path('dashboard_assignment_index') }}" class="btn btn-sm btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> Retour à la liste
+                <i class="bi bi-arrow-left"></i> {{ 'Back to list'|trans }}
             </a>
         </div>
     </div>
@@ -19,14 +19,14 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">{{ assignment.title }}</h5>
             {% if assignment.isActive %}
-                <span class="badge bg-success">Actif</span>
+                <span class="badge bg-success">{{ 'Active'|trans }}</span>
             {% else %}
-                <span class="badge bg-secondary">Inactif</span>
+                <span class="badge bg-secondary">{{ 'Inactive'|trans }}</span>
             {% endif %}
         </div>
         <div class="card-body">
             <div class="mb-3">
-                <h6>Type</h6>
+                <h6>{{ 'Type'|trans }}</h6>
                 <p class="mb-0">
                     {% if assignment.type %}
                         <span class="badge bg-secondary">
@@ -36,14 +36,14 @@
                             {{ assignment.type.title }}
                         </span>
                     {% else %}
-                        <span class="text-muted">Aucun type défini</span>
+                        <span class="text-muted">{{ 'No type defined'|trans }}</span>
                     {% endif %}
                 </p>
             </div>
 
             {% if assignment.description %}
                 <div class="mb-3">
-                    <h6>Description</h6>
+                    <h6>{{ 'Description'|trans }}</h6>
                     <p class="mb-0">{{ assignment.description|nl2br }}</p>
                 </div>
             {% endif %}
@@ -51,14 +51,14 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="mb-3">
-                        <h6>Points</h6>
+                        <h6>{{ 'Points'|trans }}</h6>
                         <p class="mb-0">{{ assignment.points }}</p>
                     </div>
                 </div>
                 {% if assignment.targetUrl %}
                     <div class="col-md-8">
                         <div class="mb-3">
-                            <h6>URL cible</h6>
+                            <h6>{{ 'Target URL'|trans }}</h6>
                             <p class="mb-0">
                                 <a href="{{ assignment.targetUrl }}" target="_blank" rel="noopener noreferrer">
                                     {{ assignment.targetUrl }}
@@ -72,13 +72,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <h6>Date de création</h6>
+                        <h6>{{ 'Created at'|trans }}</h6>
                         <p class="mb-0">{{ assignment.createdAt ? assignment.createdAt|date('d/m/Y H:i') : '-' }}</p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <h6>Date d'expiration</h6>
+                        <h6>{{ 'Expires at'|trans }}</h6>
                         <p class="mb-0">{{ assignment.expiresAt ? assignment.expiresAt|date('d/m/Y H:i') : 'Aucune date d\'expiration' }}</p>
                     </div>
                 </div>

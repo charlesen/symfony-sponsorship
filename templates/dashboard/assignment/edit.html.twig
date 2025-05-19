@@ -1,16 +1,16 @@
-{% extends '@Dashboard/layout.html.twig' %}
+{% extends 'dashboard/layout.html.twig' %}
 
-{% block title %}Modifier l'Assignment{% endblock %}
+{% block title %}{{ 'Edit Assignment'|trans }}{% endblock %}
 
 {% block content %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <h1 class="h2">Modifier l'Assignment</h1>
+        <h1 class="h2">{{ 'Edit Assignment'|trans }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <a href="{{ path('dashboard_assignment_show', {'id': assignment.id}) }}" class="btn btn-sm btn-outline-secondary me-2">
-                <i class="bi bi-eye"></i> Voir
+                <i class="bi bi-eye"></i> {{ 'Show'|trans }}
             </a>
             <a href="{{ path('dashboard_assignment_index') }}" class="btn btn-sm btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> Retour à la liste
+                <i class="bi bi-arrow-left"></i> {{ 'Back to list'|trans }}
             </a>
         </div>
     </div>
@@ -36,7 +36,7 @@
             $('select[data-controller="select2"]').select2({
                 theme: 'bootstrap-5',
                 width: '100%',
-                placeholder: 'Sélectionnez une option',
+                placeholder: '{{ 'Select an option'|trans }}',
                 allowClear: true
             });
         });

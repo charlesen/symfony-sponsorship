@@ -76,5 +76,8 @@ final class SecurityController extends AbstractController
      * Logout
      */
     #[Route('/logout', name: 'logout')]
-    public function logout(): void {}
+    public function logout(): Response
+    {
+        throw new \LogicException('This code should never be reached');
+    }
 }

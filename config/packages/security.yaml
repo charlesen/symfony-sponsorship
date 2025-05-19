@@ -25,7 +25,7 @@ security:
       # entry_point: login_link
 
       logout:
-        path: /logout
+        path: logout
         target: home
 
       # activate different ways to authenticate
