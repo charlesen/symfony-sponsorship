@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Assignment{% endblock %}
+
+{% block body %}
+    <h1>Edit Assignment</h1>
+
+    {{ include('dashboard/assignment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('dashboard_assignment_index') }}">back to list</a>
+
+    {{ include('dashboard/assignment/_delete_form.html.twig') }}
+{% endblock %}

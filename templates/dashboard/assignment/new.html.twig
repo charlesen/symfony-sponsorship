@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Assignment{% endblock %}
+
+{% block body %}
+    <h1>Create new Assignment</h1>
+
+    {{ include('dashboard/assignment/_form.html.twig') }}
+
+    <a href="{{ path('dashboard_assignment_index') }}">back to list</a>
+{% endblock %}

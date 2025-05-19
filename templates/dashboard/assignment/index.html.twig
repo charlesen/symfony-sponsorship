@@ -1,0 +1,45 @@
+{% extends 'dashboard/layout.html.twig' %}
+
+{% block title %}Assignment index{% endblock %}
+
+{% block content %}
+    <h1>Assignment index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>IsActive</th>
+                <th>ExpiresAt</th>
+                <th>TargetUrl</th>
+                <th>Points</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for assignment in assignments %}
+            <tr>
+                <td>{{ assignment.id }}</td>
+                <td>{{ assignment.title }}</td>
+                <td>{{ assignment.description }}</td>
+                <td>{{ assignment.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ assignment.expiresAt ? assignment.expiresAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ assignment.targetUrl }}</td>
+                <td>{{ assignment.points }}</td>
+                <td>
+                    <a href="{{ path('dashboard_assignment_show', {'id': assignment.id}) }}">show</a>
+                    <a href="{{ path('dashboard_assignment_edit', {'id': assignment.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('dashboard_assignment_new') }}">Create new</a>
+{% endblock %}
