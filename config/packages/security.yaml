@@ -17,9 +17,12 @@ security:
       lazy: true
       provider: app_user_provider
 
+      # authentification par lien magique
       login_link:
         check_route: login_check
-        signature_properties: ["id"]
+        signature_properties: ["id", "email"]
+
+      # entry_point: login_link
 
       logout:
         path: /logout
@@ -41,7 +44,6 @@ security:
   access_control:
     - { path: ^/(fr|en)/dashboard/admin/user, roles: ROLE_SUPER_ADMIN }
     - { path: ^/(fr|en)/dashboard/admin, roles: ROLE_ADMIN }
-    - { path: ^/(fr|en)/dashboard/.*, roles: ROLE_USER }
 
 when@test:
   security:

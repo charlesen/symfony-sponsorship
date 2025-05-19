@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 #[Route('/{_locale}/dashboard', name: 'dashboard_', defaults: ['_locale' => 'en'], requirements: ['_locale' => 'en|fr'])]
 final class DashboardController extends AbstractController
 {
