@@ -3,8 +3,7 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\Assignment;
-use App\Entity\AssignmentType;
-use App\Form\AssignmentType as AssignmentFormType;
+use App\Form\AssignmentFormType;
 use App\Repository\AssignmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
