@@ -56,8 +56,6 @@ final class LocaleRedirectListener
         // Set locale for translation
         $this->localeSwitcher->setLocale($locale);
 
-        dd($locale);
-
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
 }
