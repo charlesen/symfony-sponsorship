@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AssignmentType{% endblock %}
+
+{% block content %}
+    <h1>AssignmentType</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ assignment_type.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ assignment_type.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ assignment_type.description }}</td>
+            </tr>
+            <tr>
+                <th>Icon</th>
+                <td>{{ assignment_type.icon }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('dashboard_assignment_type_index') }}">back to list</a>
+
+    <a href="{{ path('dashboard_assignment_type_edit', {'id': assignment_type.id}) }}">edit</a>
+
+    {{ include('dashboard/assignment_type/_delete_form.html.twig') }}
+{% endblock %}

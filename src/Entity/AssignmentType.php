@@ -18,9 +18,6 @@ class AssignmentType
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 50, unique: true)]
-    private ?string $code = null;
-
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $description = null;
 
@@ -76,17 +73,6 @@ class AssignmentType
     {
         $this->assignments->removeElement($assignment);
 
-        return $this;
-    }
-
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    public function setCode(string $code): static
-    {
-        $this->code = $code;
         return $this;
     }
 

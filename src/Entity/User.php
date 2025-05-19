@@ -52,9 +52,16 @@ class User implements UserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $locale = null;
 
+    /**
+     * @var Collection<int, UserAssignment>
+     */
+    #[ORM\OneToMany(targetEntity: UserAssignment::class, mappedBy: 'user')]
+    private Collection $assignments;
+
     public function __construct()
     {
         $this->referrals = new ArrayCollection();
+        $this->assignments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +200,51 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Collection<int, UserAssignment>
+     */
+    public function getAssignments(): Collection
+    {
+        return $this->assignments;
+    }
+
+    public function addAssignment(UserAssignment $assignment): static
+    {
+        if (!$this->assignments->contains($assignment)) {
+            $this->assignments->add($assignment);
+            $assignment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssignment(UserAssignment $assignment): static
+    {
+        if ($this->assignments->removeElement($assignment)) {
+            // set the owning side to null (unless already changed)
+            if ($assignment->getUser() === $this) {
+                $assignment->setUser(null);
+            }
+        }
+        return $this;
+    }
+
+    public function getCompletedAssignments(): Collection
+    {
+        return $this->assignments->filter(
+            fn(UserAssignment $assignment) => $assignment->isComplete()
+        );
+    }
+
+    public function getTotalPointsEarned(): int
+    {
+        return array_sum(
+            $this->getCompletedAssignments()
+                ->map(fn(UserAssignment $assignment) => $assignment->getPointsEarned())
+                ->toArray()
+        );
+    }
+
     public function getLocale(): ?string
     {
         return $this->locale;
@@ -201,7 +253,6 @@ class User implements UserInterface
     public function setLocale(?string $locale): static
     {
         $this->locale = $locale;
-
         return $this;
     }
 }

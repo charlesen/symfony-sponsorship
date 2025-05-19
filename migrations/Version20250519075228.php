@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250509085942 extends AbstractMigration
+final class Version20250519075228 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,10 +21,10 @@ final class Version20250509085942 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE page ADD slug VARCHAR(255) NOT NULL
+            DROP INDEX UNIQ_D7D89AB577153098 ON assignment_type
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE UNIQUE INDEX UNIQ_140AB620989D9B62 ON page (slug)
+            ALTER TABLE assignment_type DROP code
         SQL);
     }
 
@@ -32,10 +32,10 @@ final class Version20250509085942 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            DROP INDEX UNIQ_140AB620989D9B62 ON page
+            ALTER TABLE assignment_type ADD code VARCHAR(50) NOT NULL
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE page DROP slug
+            CREATE UNIQUE INDEX UNIQ_D7D89AB577153098 ON assignment_type (code)
         SQL);
     }
 }
