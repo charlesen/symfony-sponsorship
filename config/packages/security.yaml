@@ -21,18 +21,13 @@ security:
       login_link:
         check_route: login_check
         signature_properties: ["id", "email"]
+        max_uses: 3
 
       # entry_point: login_link
 
       logout:
         path: logout
         target: home
-
-      remember_me:
-        secret: "%kernel.secret%"
-        lifetime: 604800
-        path: /
-        always_remember_me: true
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
@@ -48,6 +43,7 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    - { path: ^/(fr|en)/dashboard/, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/(fr|en)/dashboard/admin/user, roles: ROLE_SUPER_ADMIN }
     - { path: ^/(fr|en)/dashboard/admin, roles: ROLE_ADMIN }
 
