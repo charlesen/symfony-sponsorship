@@ -1,28 +1,55 @@
 # DEVBOOK
 
-## Fonctionnalités à implémenter (par étapes)
+## État actuel du projet
 
-### 1. Authentification simple
-- [x] Utilisateur entre son email
-- [x] Envoi d’un lien de connexion via Symfony Mailer (magic link)
-- [x] Token à usage unique, valable X minutes
-- [ ] Stocké temporairement en base (table magic_link_tokens)
+### 1. Authentification
+- [x] Système de connexion par email avec magic link
+- [x] Gestion des utilisateurs avec entité User
+- [x] Envoi d'emails avec Symfony Mailer
+- [x] Internationalisation (traductions)
 
-### 2. Tableau de bord utilisateur
-- [ ] URL de parrainage unique (type /invite/xxxx)
-- [ ] Liste des missions (suivre, partager, inviter)
-- [ ] Points et statut affichés
-- [ ] Suivi des actions remplies
+### 2. Structure de base
+- [x] Système de routage avec localisation
+- [x] Contrôleurs pour la gestion des pages et du tableau de bord
+- [x] Entités de base (User, Page)
+- [x] Système de slugs pour les URLs
 
-### 3. Missions personnalisables (en BDD)
-- [ ] Entité Mission (nom, description, type, points, lien)
-    - follow_instagram
-    - share_page
-    - invite_friend
-    - etc.
-- [ ] L’utilisateur coche des cases ou remplit des champs pour valider.
+## Prochaines étapes (24h)
 
-### 4. Stockage des contacts dans Brevo
-- [ ] À chaque action :
-    - L’email + prénom sont ajoutés via l’API Brevo
-    - Tu peux associer des attributs personnalisés (parrain, score, actions remplies, etc.)
+### J-1 : Matin (4h)
+1. **Tableau de bord utilisateur (2h)**
+   - [ ] Créer l'interface du tableau de bord
+   - [ ] Afficher les statistiques de base
+   - [ ] Générer une URL de parrainage unique
+
+2. **Système de missions (2h)**
+   - [ ] Créer l'entité Mission avec ses propriétés
+   - [ ] Implémenter le CRUD pour les missions
+   - [ ] Créer les fixtures pour les missions de base
+
+### J-1 : Après-midi (4h)
+3. **Système de parrainage (2h)**
+   - [ ] Implémenter la logique de parrainage
+   - [ ] Créer la page d'invitation
+   - [ ] Suivi des parrainages
+
+4. **Intégration Brevo (2h)**
+   - [ ] Configurer le SDK Brevo
+   - [ ] Synchroniser les utilisateurs avec Brevo
+   - [ ] Mettre à jour les attributs personnalisés
+
+### J-1 : Soir (4h)
+5. **Tests et optimisation (2h)**
+   - [ ] Écrire des tests unitaires
+   - [ ] Optimiser les requêtes
+   - [ ] Vérifier la sécurité
+
+6. **Finalisation (2h)**
+   - [ ] Documentation utilisateur
+   - [ ] Tests d'acceptation
+   - [ ] Déploiement
+
+## Notes techniques
+- Utiliser les événements Symfony pour déclencher les actions de parrainage
+- Implémenter un système de file d'attente pour les appels API vers Brevo
+- Mettre en cache les données fréquemment accédées
