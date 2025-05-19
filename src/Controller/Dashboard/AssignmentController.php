@@ -3,18 +3,19 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\Assignment;
-use App\Form\AssignmentForm;
+use App\Entity\AssignmentType;
+use App\Form\AssignmentType as AssignmentFormType;
 use App\Repository\AssignmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/{_locale}/dashboard/assignment', name: 'dashboard_assignment_')]
-final class AssignmentController extends AbstractController
+#[Route('/dashboard/assignments')]
+class AssignmentController extends AbstractController
 {
-    #[Route('', name: 'index', methods: ['GET'])]
+    #[Route('/', name: 'dashboard_assignment_index', methods: ['GET'])]
     public function index(AssignmentRepository $assignmentRepository): Response
     {
         return $this->render('dashboard/assignment/index.html.twig', [
@@ -22,18 +23,19 @@ final class AssignmentController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'dashboard_assignment_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $assignment = new Assignment();
-        $form = $this->createForm(AssignmentForm::class, $assignment);
+        $form = $this->createForm(AssignmentFormType::class, $assignment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($assignment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('dashboard_assignment_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Assignment créé avec succès.');
+            return $this->redirectToRoute('dashboard_assignment_show', ['id' => $assignment->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('dashboard/assignment/new.html.twig', [
@@ -42,7 +44,7 @@ final class AssignmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/{id}', name: 'dashboard_assignment_show', methods: ['GET'])]
     public function show(Assignment $assignment): Response
     {
         return $this->render('dashboard/assignment/show.html.twig', [
@@ -50,16 +52,16 @@ final class AssignmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'dashboard_assignment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Assignment $assignment, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AssignmentForm::class, $assignment);
+        $form = $this->createForm(AssignmentFormType::class, $assignment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
-            return $this->redirectToRoute('dashboard_assignment_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Assignment mis à jour avec succès.');
+            return $this->redirectToRoute('dashboard_assignment_show', ['id' => $assignment->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('dashboard/assignment/edit.html.twig', [
@@ -68,12 +70,13 @@ final class AssignmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'dashboard_assignment_delete', methods: ['POST'])]
     public function delete(Request $request, Assignment $assignment, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $assignment->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $assignment->getId(), $request->request->get('_token'))) {
             $entityManager->remove($assignment);
             $entityManager->flush();
+            $this->addFlash('success', 'Assignment supprimé avec succès.');
         }
 
         return $this->redirectToRoute('dashboard_assignment_index', [], Response::HTTP_SEE_OTHER);

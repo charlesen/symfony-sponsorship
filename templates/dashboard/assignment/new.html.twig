@@ -1,11 +1,49 @@
-{% extends 'base.html.twig' %}
+{% extends '@Dashboard/layout.html.twig' %}
 
-{% block title %}New Assignment{% endblock %}
+{% block title %}Nouvel Assignment{% endblock %}
 
-{% block body %}
-    <h1>Create new Assignment</h1>
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">Créer un nouvel assignment</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ path('dashboard_assignment_index') }}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
 
-    {{ include('dashboard/assignment/_form.html.twig') }}
+    <div class="card">
+        <div class="card-body">
+            {{ include('dashboard/assignment/_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
 
-    <a href="{{ path('dashboard_assignment_index') }}">back to list</a>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation de Flatpickr
+            flatpickr.localize(flatpickr.l10ns.fr);
+            
+            // Initialisation de Select2
+            $('select[data-controller="select2"]').select2({
+                theme: 'bootstrap-5',
+                width: '100%',
+                placeholder: 'Sélectionnez une option',
+                allowClear: true
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 {% endblock %}
