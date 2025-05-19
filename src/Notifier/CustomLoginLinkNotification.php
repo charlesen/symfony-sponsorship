@@ -23,8 +23,6 @@ class CustomLoginLinkNotification extends LoginLinkNotification
     {
         $emailMessage = parent::asEmailMessage($recipient, $transport);
 
-        // dd($emailMessage);
-
         // get the NotificationEmail object and override the template
         $email = $emailMessage->getMessage();
         $context = [

@@ -6,11 +6,13 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Translation\LocaleSwitcher;
 
 final class LocaleRedirectListener
 {
     public function __construct(
         private readonly Security $security,
+        private LocaleSwitcher $localeSwitcher,
     ) {}
 
     #[AsEventListener(event: 'kernel.request', priority: 255)]
@@ -50,6 +52,11 @@ final class LocaleRedirectListener
         // Redirige vers /<locale>/<path> (en supprimant un éventuel / initial)
         $redirectPath = ltrim($path, '/');
         $redirectUrl = '/' . $locale . ($redirectPath ? '/' . $redirectPath : '');
+
+        // Set locale for translation
+        $this->localeSwitcher->setLocale($locale);
+
+        dd($locale);
 
         $event->setResponse(new RedirectResponse($redirectUrl));
     }
