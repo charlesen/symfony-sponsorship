@@ -1,20 +1,21 @@
 {# Custom Magic Link Email Template #}
 {% extends 'base_email.html.twig' %}
 
-{% block subject %}{{ 'Login to your account'|trans }}{% endblock %}
+{% block subject %}{{ subject }}{% endblock %}
 
 {% block body_html %}
-    <h2 style="margin-bottom: 20px;">{{ 'Login to your account'|trans }}</h2>
-    <p>{{ 'Hello'|trans }},</p>
-    <p>{{ 'To log in to your account, simply click the link below'|trans }} : </p>
-    <p style="margin: 30px 0;">
-      <a href="{{ loginLinkDetails.url }}" style="background: #2563eb; color: #fff; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-        {{ 'Login now'|trans }}
-      </a>
-    </p>
-    <p style="color: #666; font-size: 13px;">
-      {{ 'This link is valid for'|trans }} {{ loginLinkDetails.expiresAt|date('H:i') }}.<br>
-      {{ 'If you did not request this, you can ignore this email.'|trans }}
-    </p>
+  {% set secondsLeft = loginLinkDetails.expiresAt|date('U') - 'now'|date('U') %}
+  {% set minutesLeft = secondsLeft / 60 %}
+  <h2 style="margin-bottom: 20px;">{{ subject }}</h2>
+  <p>{{ 'Hello'|trans(locale=userLocale) }},</p>
+  <p>{{ 'To log in to your account, simply click the link below'|trans(locale=userLocale) }} : </p>
+  <p style="margin: 30px 0;">
+    <a href="{{ loginLinkDetails.url }}" style="background: #2563eb; color: #fff; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+      {{ 'Login now'|trans(locale=userLocale) }}
+    </a>
+  </p>
+  <p style="color: #666; font-size: 13px;">
+    {{ 'This link is valid for'|trans(locale=userLocale) }} {{ minutesLeft|round }} {{ minutesLeft|round == 1 ? 'minute' : 'minutes' }}.<br>
+    {{ 'If you did not request this, you can ignore this email.'|trans(locale=userLocale) }}
+  </p>
 {% endblock %}
-

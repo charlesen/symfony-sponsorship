@@ -12,7 +12,7 @@ class CustomLoginLinkNotification extends LoginLinkNotification
 {
     public function __construct(
         private LoginLinkDetails $loginLinkDetails,
-        string $subject,
+        private string $subject,
         array $channels = [],
         private array $params = []
     ) {
@@ -30,6 +30,7 @@ class CustomLoginLinkNotification extends LoginLinkNotification
             ...$this->params,
             'recipient' => $recipient,
             'loginLinkDetails' => $this->loginLinkDetails,
+            'subject' => $this->subject,
         ];
 
         $email->htmlTemplate('security/emails/custom_login_link_email.html.twig')
