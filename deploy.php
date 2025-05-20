@@ -65,7 +65,7 @@ after('deploy:vendors', 'deploy:assets');
 // Tâche de déploiement complète
 task('deploy', [
     'deploy:info',
-    'deploy:setup',
+    'deploy:prepare',
     'deploy:lock',
     'deploy:release',
     'deploy:update_code',
