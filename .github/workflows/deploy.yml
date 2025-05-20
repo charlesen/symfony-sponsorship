@@ -1,0 +1,58 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer:v2
+      
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+      
+      - name: Deploy with Deployer
+        env:
+          DEPLOYER_AUTH: ${{ secrets.DEPLOYER_AUTH }}
+        run: |
+          # Installation de Deployer si nécessaire
+          curl -LO https://deployer.org/deployer.phar
+          mv deployer.phar /usr/local/bin/dep
+          chmod +x /usr/local/bin/dep
+          
+          # Exécution du déploiement
+          dep deploy production --tag=${{ github.sha }} -vvv
+      
+      - name: Notify deployment status
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: "Déploiement de l'application"
+          SLACK_MESSAGE: "Déploiement vers la production ${{ job.status }} pour le commit ${{ github.sha }}"
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}

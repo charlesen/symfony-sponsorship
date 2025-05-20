@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Mailer as SymfonyMailer;
 
 #[AsCommand(
     name: 'app:send-test-email',
@@ -17,12 +17,22 @@ use Symfony\Component\Mailer\Mailer;
 )]
 class SendTestEmailCommand extends Command
 {
+    private $mailer;
+
+    public function __construct(MailerInterface $mailer = null)
+    {
+        parent::__construct();
+        $this->mailer = $mailer;
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // Créer un transport SMTP direct sans passer par Messenger
-        $dsn = 'smtp://mailpit:1025';
-        $transport = Transport::fromDsn($dsn);
-        $mailer = new Mailer($transport);
+        // Si aucun mailer n'est injecté, on en crée un nouveau
+        if ($this->mailer === null) {
+            $dsn = 'smtp://mailpit:1025';
+            $transport = Transport::fromDsn($dsn);
+            $this->mailer = new SymfonyMailer($transport);
+        }
 
         $email = (new Email())
             ->from('noreply@example.com')
@@ -32,7 +42,7 @@ class SendTestEmailCommand extends Command
             ->html('<p>This is a <strong>test email</strong> sent from Symfony with Mailpit.</p>');
 
         try {
-            $mailer->send($email);
+            $this->mailer->send($email);
             $output->writeln('Test email sent successfully!');
             $output->writeln('Check your Mailpit interface at http://localhost:8025');
             return Command::SUCCESS;
