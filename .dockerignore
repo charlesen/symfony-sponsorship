@@ -1,0 +1,37 @@
+# Ignorer les dossiers inutiles
+.git/
+.gitignore
+.dockerignore
+.idea/
+.vscode/
+*.sublime-*
+
+# Ignorer les fichiers sensibles
+.env
+.env.local
+.env.*.local
+
+# Ignorer les dossiers de dépendances
+/vendor/
+/node_modules/
+
+# Ignorer les dossiers de build et de cache
+/var/
+/public/bundles/
+/public/build/
+
+# Ignorer les logs
+*.log
+
+# Ignorer les sauvegardes
+*.bak
+*.swp
+*~
+
+# Ignorer les fichiers de configuration locaux
+/docker-compose.override.yml
+
+# Ignorer les fichiers IDE
+.idea/
+.vscode/
+*.sublime-*

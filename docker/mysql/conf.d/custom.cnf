@@ -1,0 +1,23 @@
+[mysqld]
+# Optimisations pour le développement
+max_allowed_packet = 256M
+innodb_buffer_pool_size = 256M
+innodb_log_file_size = 128M
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+innodb_file_per_table = 1
+innodb_autoinc_lock_mode = 2
+
+# Configuration du jeu de caractères
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+# Configuration du temps d'attente
+wait_timeout = 600
+interactive_timeout = 600
+
+# Logs des requêtes lentes
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/mysql-slow.log
+long_query_time = 1
+log_queries_not_using_indexes = 1

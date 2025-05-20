@@ -16,21 +16,22 @@ security:
     main:
       lazy: true
       provider: app_user_provider
-
-      # authentification par lien magique
+      stateless: false
+      form_login:
+        # check_path: login
+        login_path: login
+        enable_csrf: true
       login_link:
         check_route: login_check
         signature_properties: ["id", "email"]
         max_uses: 3
-
-      # entry_point: login_link
-
+        # Lien expirant après 1 heure (en secondes)
+        lifetime: 3600
       logout:
         path: logout
         target: home
-
-      # activate different ways to authenticate
-      # https://symfony.com/doc/current/security.html#the-firewall
+      # Rediriger vers la page de connexion pour les utilisateurs non authentifiés
+      entry_point: form_login
 
       # https://symfony.com/doc/current/security/impersonating_user.html
       # switch_user: true

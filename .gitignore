@@ -8,6 +8,12 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> Docker ###
+/docker/mysql/data/
+/docker/redis/data/
+/docker/mailhog/data/
+###< Docker ###
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/dashboard/assignments')]
+#[Route('/{_locale}/dashboard/assignments')]
 class AssignmentController extends AbstractController
 {
     #[Route('/', name: 'dashboard_assignment_index', methods: ['GET'])]
