@@ -1,23 +1,34 @@
-name: Deploy
+name: Deploy to Production
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    branches: [main]
-    types:
-      - completed
+  push:
+    branches: [ main ]  # Ne se déclenche que sur la branche main
+  workflow_dispatch:  # Permet un déclenchement manuel
 
 jobs:
   deploy:
     name: Deploy to production
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
+    
+    # Vérifie que le workflow CI a réussi (si déclenché par un push)
+    if: |
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'push' && github.ref == 'refs/heads/main')
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Verify branch
+        run: |
+          echo "Déploiement depuis la branche: ${{ github.ref_name }}"
+          if [ "${{ github.ref_name }}" != "main" ]; then
+            echo "Erreur: Le déploiement n'est autorisé que depuis la branche main"
+            exit 1
+          fi
       
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -35,18 +46,33 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
       
-      - name: Deploy with Deployer
-        env:
-          DEPLOYER_AUTH: ${{ secrets.DEPLOYER_AUTH }}
+      - name: Install Deployer
         run: |
-          # Installation de Deployer si nécessaire
           curl -LO https://deployer.org/deployer.phar
           mv deployer.phar /usr/local/bin/dep
           chmod +x /usr/local/bin/dep
-          
+          dep --version
+      
+      - name: Verify server connection
+        run: |
+          ssh -o BatchMode=yes -o ConnectTimeout=5 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} echo "Connexion SSH réussie"
+      
+      - name: Deploy with Deployer
+        env:
+          APP_ENV: prod
+          APP_DEBUG: 0
+        run: |
           # Exécution du déploiement
           dep deploy production --tag=${{ github.sha }} -vvv
+      
+      - name: Verify deployment
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            cd /var/www/symfony-sponsorship/current && \
+            echo -n 'Version déployée: ' && \
+            git describe --tags || echo 'Aucun tag trouvé'"
       
       - name: Notify deployment status
         if: always()
