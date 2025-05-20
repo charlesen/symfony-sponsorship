@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop, "feat/*" ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    
+    services:
+      # Service MySQL pour les tests
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: symfony_sponsorship_test
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    
+      # Service Redis pour les tests
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server --requirepass test_password
+    
+      # Service Mailpit pour les tests
+      mailpit:
+        image: axllent/mailpit:latest
+        ports:
+          - 1025:1025 # SMTP
+          - 8025:8025 # Web UI
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+          tools: composer:v2
+          extensions: intl, pdo_mysql, zip, gd, exif, pcntl, bcmath, opcache, redis
+      
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      
+      - name: Cache Composer packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-scripts
+          composer run-script post-install-cmd --no-interaction
+      
+      - name: Set up environment
+        run: |
+          cp .env.test .env
+          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/symfony_sponsorship_test?serverVersion=8.0.32&charset=utf8mb4" >> .env
+          echo "MAILER_DSN=smtp://localhost:1025" >> .env
+          echo "REDIS_DSN=redis://:test_password@localhost:6379" >> .env
+      
+      - name: Create database schema
+        run: |
+          php bin/console doctrine:database:create --if-not-exists --env=test
+          php bin/console doctrine:schema:create --env=test
+      
+      - name: Run PHPUnit tests
+        run: php bin/phpunit --coverage-clover=coverage.xml
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.xml
+          fail_ci_if_error: false
+      
+      - name: Lint Twig templates
+        run: php bin/console lint:twig templates/
+      
+      - name: Lint YAML files
+        run: php bin/console lint:yaml config/
+      
+      - name: Lint container
+        run: php bin/console lint:container
+      
+      - name: Security check
+        run: composer require --dev symfony/security-checker && vendor/bin/security-checker security:check composer.lock
