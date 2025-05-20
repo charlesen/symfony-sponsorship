@@ -7,7 +7,7 @@ require 'recipe/symfony.php';
 // Configuration du projet
 set('application', 'Symfony Sponsorship');
 set('repository', 'git@github.com:charlesen/symfony-sponsorship-bundle.git');
-set('git_tty', true);
+set('git_tty', false); // Désactive le TTY pour éviter les problèmes
 set('keep_releases', 3);
 set('allow_anonymous_stats', false);
 
@@ -52,10 +52,13 @@ host('production')
     ->set('writable_use_sudo', false)
     ->set('clear_paths', ['.git', 'deploy.php', 'docker-compose.yml', 'docker-compose.override.yml', 'Dockerfile', '.docker'])
     ->set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-scripts')
+    ->set('ssh_multiplexing', false)
+    ->set('git_ssh_command', 'ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no')
     ->set('env', [
         'APP_ENV' => 'prod',
         'APP_DEBUG' => '0',
-    ]);
+    ])
+    ->identityFile('~/.ssh/id_ed25519');
 
 // Configuration des tâches à exécuter avant et après le déploiement
 after('deploy:failed', 'deploy:unlock');
