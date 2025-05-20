@@ -40,8 +40,8 @@ jobs:
           --health-retries 3
         env:
           REDIS_PASSWORD: test_password
-        # Configuration du mot de passe via la commande
-        command: ["redis-server", "--requirepass", "test_password"]
+        # Configuration du mot de passe via la commande d'entrée
+        entrypoint: ["sh", "-c", "redis-server --requirepass $${REDIS_PASSWORD}"]
     
       # Service Mailpit pour les tests
       mailpit:
