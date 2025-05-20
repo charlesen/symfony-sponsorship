@@ -49,6 +49,8 @@ when@prod:
         cache:
             pools:
                 doctrine.result_cache_pool:
-                    adapter: cache.app
+                    adapter: cache.adapter.redis
+                    provider: cache.default_redis_provider
+                    default_lifetime: 0
                 doctrine.system_cache_pool:
                     adapter: cache.system
