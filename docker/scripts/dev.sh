@@ -27,16 +27,24 @@ if ! docker info > /dev/null 2>&1; then
     done
 fi
 
-# Vérifier si le fichier .env.local existe
-if [ ! -f "../.env.local" ]; then
+# Créer .env.local à partir de l'exemple s'il n'existe pas
+if [ ! -f ".env.local" ] && [ -f ".env.local.example" ]; then
     info "Création du fichier .env.local à partir du fichier .env.local.example..."
-    cp ../.env.local.example ../.env.local
-    warning "Veuillez configurer le fichier .env.local avec vos paramètres avant de continuer."
+    cp .env.local.example .env.local
+    warning "Le fichier .env.local a été créé. Veuillez le configurer avec vos paramètres avant de continuer."
+    exit 1
+elif [ ! -f ".env.local" ]; then
+    error "Le fichier .env.local n'existe pas et aucun fichier .env.local.example n'a été trouvé pour le créer."
     exit 1
 fi
 
 # Charger les variables d'environnement
-export $(grep -v '^#' ../.env.local | xargs)
+if [ -f ".env.local" ]; then
+    # Source le fichier .env.local
+    set -a
+    . ./.env.local
+    set +a
+fi
 
 # Vérifier si les conteneurs sont déjà en cours d'exécution
 if [ "$(docker ps -q -f name=nginx)" ] || [ "$(docker ps -q -f name=php)" ] || [ "$(docker ps -q -f name=mysql)" ] || [ "$(docker ps -q -f name=redis)" ] || [ "$(docker ps -q -f name=mailpit)" ]; then
@@ -72,15 +80,19 @@ info "MySQL est prêt !"
 # Vérifier si la base de données existe
 if ! docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "USE $MYSQL_DATABASE" 2>/dev/null; then
     info "Création de la base de données $MYSQL_DATABASE..."
-    docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-    
+    # Création de la base de données avec une syntaxe plus simple
+    docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`;"
+
+    # Définition du charset et collation après création
+    docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "ALTER DATABASE \`$MYSQL_DATABASE\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
     info "Création de l'utilisateur $MYSQL_USER..."
     docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
-    
-    info "Attribution des privilèges..."
-    docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';"
+
+    info "Attribution des droits sur la base de données..."
+    docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%';"
     docker-compose exec -T database mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
-    
+
     info "Base de données et utilisateur créés avec succès !"
 else
     info "La base de données $MYSQL_DATABASE existe déjà."
