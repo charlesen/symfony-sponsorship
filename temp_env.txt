@@ -1,0 +1,4 @@
+# Ajoutez ces lignes à votre fichier .env.local
+
+# Configuration du consommateur de messages
+MESSENGER_CONSUMER_NAME=consumer_%kernel.environment%_%kernel.project_dir%

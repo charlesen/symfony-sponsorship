@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250519075228 extends AbstractMigration
+final class Version20250523135520 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,10 +21,7 @@ final class Version20250519075228 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            DROP INDEX UNIQ_D7D89AB577153098 ON assignment_type
-        SQL);
-        $this->addSql(<<<'SQL'
-            ALTER TABLE assignment_type DROP code
+            ALTER TABLE user DROP password
         SQL);
     }
 
@@ -32,10 +29,7 @@ final class Version20250519075228 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE assignment_type ADD code VARCHAR(50) NOT NULL
-        SQL);
-        $this->addSql(<<<'SQL'
-            CREATE UNIQUE INDEX UNIQ_D7D89AB577153098 ON assignment_type (code)
+            ALTER TABLE `user` ADD password VARCHAR(255) NOT NULL
         SQL);
     }
 }

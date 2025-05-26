@@ -1,0 +1,160 @@
+# Fichier de configuration des variables d'environnement
+# Copiez ce fichier en .env.local et modifiez les valeurs selon votre environnement
+
+# ===================================
+# ENVIRONNEMENT SYMFONY
+# ===================================
+APP_ENV=dev
+APP_SECRET=ChangeThisToARealSecretKey
+APP_DEBUG=1
+APP_DOMAIN=localhost
+ADMIN_EMAIL=admin@example.com
+
+# ===================================
+# BASE DE DONNÉES MYSQL
+# ===================================
+DATABASE_URL="mysql://app:!ChangeMe!@database:3306/symfony_sponsorship?serverVersion=8.0.32&charset=utf8mb4"
+
+# Configuration pour Doctrine
+MYSQL_ROOT_PASSWORD=root
+MYSQL_DATABASE=symfony_sponsorship
+MYSQL_USER=app
+MYSQL_PASSWORD=!ChangeMe!
+MYSQL_PORT=3306
+
+# ===================================
+# REDIS (CACHE ET SESSIONS)
+# ===================================
+REDIS_DSN=redis://redis:6379
+REDIS_CACHE_DSN=redis://redis/1
+REDIS_SESSION_DSN=redis://redis/2
+REDIS_MESSENGER_DSN=redis://redis/3
+
+# ===================================
+# MAILER (MAILPIT)
+# ===================================
+MAILER_DSN=smtp://mailpit:1025
+MAILER_FROM_EMAIL=noreply@example.com
+MAILER_FROM_NAME="Symfony Sponsorship"
+
+# ===================================
+# XDEBUG
+# ===================================
+XDEBUG_MODE=develop,debug
+XDEBUG_CONFIG="client_host=host.docker.internal client_port=9003 start_with_request=yes"
+
+# ===================================
+# PORTS DES SERVICES
+# ===================================
+# Nginx
+NGINX_HTTP_PORT=8080
+NGINX_HTTPS_PORT=8443
+
+# MySQL
+MYSQL_PORT=3306
+
+# Redis
+REDIS_PORT=6379
+
+# Mailpit (MailHog)
+MAILHOG_SMTP_PORT=1025
+MAILHOG_HTTP_PORT=8025
+
+# Adminer
+ADMINER_PORT=8081
+
+# ===================================
+# CONFIGURATION DU FUSEAU HORAIRE
+# ===================================
+TIMEZONE=Europe/Paris
+
+# ===================================
+# CONFIGURATION DU DÉBOGAGE
+# ===================================
+# Activer/désactiver Xdebug (0 ou 1)
+XDEBUG_ENABLED=1
+
+# Activer le profilage Xdebug (0 ou 1)
+XDEBUG_PROFILE=0
+
+# ===================================
+# CONFIGURATION DE L'APPLICATION
+# ===================================
+# Clé secrète pour les tokens CSRF
+APP_SECRET=ChangeThisToARealSecretKey
+
+# Environnement de l'application (dev, test, prod)
+APP_ENV=dev
+
+# Activer/désactiver le mode debug (0 ou 1)
+APP_DEBUG=1
+
+# URL de base de l'application
+APP_URL=http://localhost:8080
+
+# ===================================
+# CONFIGURATION DES LOGS
+# ===================================
+# Niveau de log (debug, info, notice, warning, error, critical, alert, emergency)
+APP_LOG_LEVEL=debug
+
+# Chemin des fichiers de log
+APP_LOG_FILE=var/log/%kernel.environment%.log
+
+# ===================================
+# CONFIGURATION DE LA MÉMOIRE
+# ===================================
+# Limite de mémoire pour PHP (en Mo)
+MEMORY_LIMIT=512M
+
+# ===================================
+# CONFIGURATION DES UPLOADS
+# ===================================
+# Taille maximale des fichiers uploadés (en Mo)
+UPLOAD_MAX_SIZE=100M
+
+# Répertoire de stockage des fichiers uploadés
+UPLOAD_DIR=public/uploads
+
+# Types MIME autorisés pour les uploads
+UPLOAD_ALLOWED_MIME_TYPES=image/jpeg,image/png,image/gif,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain
+
+# ===================================
+# CONFIGURATION DE LA SÉCURITÉ
+# ===================================
+# Clé secrète pour les tokens CSRF
+# Cette valeur doit être identique à APP_SECRET
+# pour la compatibilité avec les anciennes versions de Symfony
+APP_SECRET=ChangeThisToARealSecretKey
+
+# Durée de vie des cookies de session (en secondes)
+SESSION_LIFETIME=3600
+
+# Domaine pour les cookies de session
+# Laissez vide pour utiliser le domaine actuel
+# SESSION_DOMAIN=
+
+# ===================================
+# CONFIGURATION DU CACHE
+# ===================================
+# Adapter selon l'environnement
+# En production, utilisez une solution comme Redis ou Memcached
+CACHE_POOL=cache.app
+
+# ===================================
+# CONFIGURATION DES MESSAGES
+# ===================================
+# Configuration du transport des messages (sync, async, etc.)
+MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
+
+# ===================================
+# CONFIGURATION DU DÉVELOPPEMENT
+# ===================================
+# Activer/désactiver la barre de débogage (0 ou 1)
+DEBUG_TOOLBAR=1
+
+# Activer/désactiver le profiler (0 ou 1)
+DEBUG_PROFILER=1
+
+# Activer/désactiver le mode maintenance (0 ou 1)
+MAINTENANCE_MODE=0

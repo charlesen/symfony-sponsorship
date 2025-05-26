@@ -25,6 +25,8 @@ class User implements UserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    // Aucun mot de passe n'est nécessaire avec l'authentification par magic link
+
     /**
      * @var list<string> The user roles
      */
@@ -118,8 +120,15 @@ class User implements UserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Pas de données sensibles à effacer avec l'authentification par magic link
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return null; // Aucun mot de passe avec l'authentification par magic link
     }
 
     public function getReferrerCode(): ?string

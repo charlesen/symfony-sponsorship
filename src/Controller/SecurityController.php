@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
@@ -16,6 +17,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/{_locale}')]
 final class SecurityController extends AbstractController
 {
+    public function __construct(
+        private readonly LoggerInterface $logger
+    ) {
+    }
     #[Route('/login_check', name: 'login_check')]
     public function index(): Response
     {
@@ -59,14 +64,21 @@ final class SecurityController extends AbstractController
             // send the notification to the user
             try {
                 $notifier->send($notification, $recipient);
+                // Si on arrive ici, l'envoi a réussi
+                $this->addFlash('success', $translator->trans('Login link sent ! Please check your email'));
+                return $this->redirectToRoute('login');
             } catch (\Exception $e) {
+                // En cas d'erreur, on log l'erreur et on affiche un message à l'utilisateur
                 $this->addFlash('error', $translator->trans('Login link could not be sent!'));
+                // On peut logger l'erreur pour le débogage
+                $this->logger->error('Failed to send login link to {email}: {error}', [
+                    'email' => $email,
+                    'error' => $e->getMessage(),
+                    'exception' => $e
+                ]);
+                // On reste sur la page de login pour qu'il puisse réessayer
+                return $this->render('security/login.html.twig');
             }
-
-            // render a "Login link is sent!" page
-            $this->addFlash('success', $translator->trans('Login link sent ! Please check your email'));
-
-            return $this->redirectToRoute('login');
         }
 
         return $this->render('security/login.html.twig');
