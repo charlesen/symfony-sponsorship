@@ -17,12 +17,9 @@ use Symfony\Component\Mailer\Mailer as SymfonyMailer;
 )]
 class SendTestEmailCommand extends Command
 {
-    private $mailer;
-
-    public function __construct(MailerInterface $mailer = null)
+    public function __construct(private MailerInterface $mailer)
     {
         parent::__construct();
-        $this->mailer = $mailer;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
