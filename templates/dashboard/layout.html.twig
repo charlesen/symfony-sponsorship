@@ -16,9 +16,11 @@
         </label>
       </div>
       <div class="flex-1">
-        <a href="{{ path('dashboard_index') }}" class="btn btn-ghost normal-case text-xl">
-          Sponsorship
-        </a>
+        {% block pageTitle %}
+        <span class="normal-case text-xl">
+          {{ block('title') }}
+        </span>
+        {% endblock %}
       </div>
 
       {% if app.user %}
@@ -59,7 +61,7 @@
     <label for="my-drawer-2" class="drawer-overlay"></label> 
     <aside class="bg-base-200 w-80">
       <div class="p-4">
-        <h2 class="text-xl font-bold">Menu</h2>
+        <h2 class="text-xl font-bold">Sponsorship</h2>
       </div>
       <ul class="menu p-4 w-80 h-full text-base-content">
         <li class="menu-title">

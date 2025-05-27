@@ -58,6 +58,7 @@
 "Email": "E-mail"
 "Firstname": "Prénom"
 "Login": "Connexion"
+"Logout": "Déconnexion"
 "All right reserved": "Tous droits réservés"
 "Home": "Accueil"
 "Register": "Inscription"
@@ -65,10 +66,12 @@
 "Register here": "Inscrivez-vous ici"
 "Connect here": "Connectez-vous ici"
 "You don't have an account ?": "Vous n'avez pas encore de compte ?"
-
+"Profile": "Profil"
+"Edit profile": "Modifier le profil"
 "Buy now": "Achetez-le dès maintenant"
 "My new book is now available on Amazon": "Mon nouveau livre est disponible sur Amazon"
 "I am very happy to announce that my new book is now available on Amazon": "Je suis heureux de vous annoncer que mon nouveau livre est disponible sur Amazon"
+"Back to list": "Retour à la liste"
 
 # About me
 "I'm Charles EDOU NZE, a passionate developer and writer. I love building tools that empower people and sharing knowledge through my books and open source projects.": "Je m'appelle Charles EDOU NZE, un développeur et écrivain passionné. J'aime construire des outils qui emploient les gens et partager des connaissances à travers mes livres et mes projets open source."
@@ -78,3 +81,10 @@
 
 # Register
 "It looks like you do not have an account": "Il semble que vous n'ayez pas de compte"
+
+# Assignments
+"Assignments": "Missions"
+"Create new assignment": "Créer une mission"
+"Edit assignment": "Modifier la mission"
+"Show assignment": "Voir la mission"
+"Delete assignment": "Supprimer la mission"

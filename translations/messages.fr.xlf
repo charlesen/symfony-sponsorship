@@ -243,11 +243,11 @@
       </trans-unit>
       <trans-unit id="xHsbIh6" resname="Dashboard">
         <source>Dashboard</source>
-        <target>__Dashboard</target>
+        <target>Tableau de bord</target>
       </trans-unit>
       <trans-unit id="Z_crX_u" resname="Delete">
         <source>Delete</source>
-        <target>__Delete</target>
+        <target>Supprimer</target>
       </trans-unit>
     </body>
   </file>
