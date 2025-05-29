@@ -10,24 +10,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-#[Route('/{_locale}/dashboard/assignment/type', defaults: ['_locale' => 'en'], requirements: ['_locale' => 'en|fr'], name: 'dashboard_assignment_type_')]
+#[Route('/{_locale}/dashboard/assignments/type', defaults: ['_locale' => 'en'], requirements: ['_locale' => 'en|fr'], name: 'dashboard_assignment_type_')]
 final class AssignmentTypeController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly AssignmentTypeRepository $assignmentTypeRepository
-    ) {
-    }
+    ) {}
 
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        
+
         $assignmentTypes = $this->assignmentTypeRepository->findAllOrderedByTitle();
-        
+
         return $this->render('dashboard/assignment_type/index.html.twig', [
             'assignment_types' => $assignmentTypes,
         ]);
@@ -37,7 +35,7 @@ final class AssignmentTypeController extends AbstractController
     public function new(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        
+
         $assignmentType = new AssignmentType();
         $form = $this->createForm(AssignmentTypeForm::class, $assignmentType);
         $form->handleRequest($request);
@@ -46,9 +44,9 @@ final class AssignmentTypeController extends AbstractController
             try {
                 $this->entityManager->persist($assignmentType);
                 $this->entityManager->flush();
-                
+
                 $this->addFlash('success', 'assignment_type.flash.created_successfully');
-                
+
                 return $this->redirectToRoute('dashboard_assignment_type_show', [
                     'id' => $assignmentType->getId(),
                 ], Response::HTTP_SEE_OTHER);
@@ -64,11 +62,11 @@ final class AssignmentTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(int $id): Response
     {
         $assignmentType = $this->assignmentTypeRepository->find($id);
-        
+
         if (!$assignmentType) {
             throw $this->createNotFoundException('assignment_type.not_found');
         }
@@ -78,26 +76,26 @@ final class AssignmentTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        
+
         $assignmentType = $this->assignmentTypeRepository->find($id);
-        
+
         if (!$assignmentType) {
             throw $this->createNotFoundException('assignment_type.not_found');
         }
-        
+
         $form = $this->createForm(AssignmentTypeForm::class, $assignmentType);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->entityManager->flush();
-                
+
                 $this->addFlash('success', 'assignment_type.flash.updated_successfully');
-                
+
                 return $this->redirectToRoute('dashboard_assignment_type_show', [
                     'id' => $assignmentType->getId(),
                 ], Response::HTTP_SEE_OTHER);
@@ -113,27 +111,27 @@ final class AssignmentTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function delete(Request $request, int $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        
+
         $assignmentType = $this->assignmentTypeRepository->find($id);
-        
+
         if (!$assignmentType) {
             throw $this->createNotFoundException('assignment_type.not_found');
         }
-        
+
         if ($this->isCsrfTokenValid('delete' . $assignmentType->getId(), $request->getPayload()->getString('_token'))) {
             try {
                 if ($assignmentType->getAssignments()->count() > 0) {
                     $this->addFlash('error', 'assignment_type.flash.cannot_delete_has_assignments');
                     return $this->redirectToRoute('dashboard_assignment_type_show', ['id' => $id]);
                 }
-                
+
                 $this->entityManager->remove($assignmentType);
                 $this->entityManager->flush();
-                
+
                 $this->addFlash('success', 'assignment_type.flash.deleted_successfully');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'flash.error.occurred');
