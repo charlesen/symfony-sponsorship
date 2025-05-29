@@ -1,11 +1,57 @@
 {% extends 'dashboard/layout.html.twig' %}
 
-{% block title %}New AssignmentType{% endblock %}
+{% block title %}{{ 'assignment_type.actions.new'|trans }}{% endblock %}
 
 {% block content %}
-    <h1>Create new AssignmentType</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">
+            <i class="fas fa-plus-circle me-2"></i>
+            {{ 'assignment_type.actions.new'|trans }}
+        </h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ path('dashboard_assignment_type_index') }}" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i> {{ 'assignment_type.actions.back_to_list'|trans }}
+            </a>
+        </div>
+    </div>
 
-    {{ include('dashboard/assignment_type/_form.html.twig') }}
-
-    <a href="{{ path('dashboard_assignment_type_index') }}">back to list</a>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    {{ include('dashboard/assignment_type/_form.html.twig', {
+                        'button_label': 'save'|trans,
+                        'include_back': false
+                    }) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ 'informations'|trans }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        {{ 'assignment_type.create_help'|trans }}
+                    </div>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            {{ 'assignment_type.create_help_1'|trans }}
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            {{ 'assignment_type.create_help_2'|trans }}
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            {{ 'assignment_type.create_help_3'|trans }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

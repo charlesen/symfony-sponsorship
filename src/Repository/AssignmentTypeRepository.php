@@ -15,6 +15,19 @@ class AssignmentTypeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, AssignmentType::class);
     }
+    
+    /**
+     * Trouve tous les types de mission triés par titre
+     *
+     * @return AssignmentType[]
+     */
+    public function findAllOrderedByTitle(): array
+    {
+        return $this->createQueryBuilder('at')
+            ->orderBy('at.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return AssignmentType[] Returns an array of AssignmentType objects

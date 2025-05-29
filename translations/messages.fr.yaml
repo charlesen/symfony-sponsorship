@@ -88,3 +88,80 @@
 "Edit assignment": "Modifier la mission"
 "Show assignment": "Voir la mission"
 "Delete assignment": "Supprimer la mission"
+
+# Assignment Types
+"assignment_type":
+  form:
+    title:
+      label: "Titre"
+      placeholder: "Entrez un titre pour ce type de mission"
+    description:
+      label: "Description"
+      placeholder: "Entrez une description pour ce type de mission (optionnel)"
+    icon:
+      label: "Icône"
+      placeholder: "Entrez une icône (ex: fas fa-icon)"
+      help: "Utilisez une icône Font Awesome (ex: fas fa-user, fas fa-tasks)"
+  title:
+    not_blank: "Le titre est obligatoire"
+    max_length: "Le titre ne doit pas dépasser 255 caractères"
+  actions:
+    create: "Créer un type de mission"
+    edit: "Modifier le type de mission"
+    show: "Détails du type de mission"
+    list: "Liste des types de mission"
+    new: "Nouveau type de mission"
+    back_to_list: "Retour à la liste des types de mission"
+    are_you_sure: "Êtes-vous sûr de vouloir supprimer ce type de mission ?"
+    no_types_found: "Aucun type de mission trouvé"
+
+# Common actions
+"save": "Enregistrer"
+"edit": "Modifier"
+"delete": "Supprimer"
+"show": "Voir"
+"actions": "Actions"
+"preview": "Aperçu"
+"choose_icon": "Choisir une icône"
+"search_icons": "Rechercher des icônes..."
+"loading": "Chargement"
+"no_icons_found": "Aucune icône trouvée"
+"select_icon": "Sélectionner l'icône"
+"close": "Fermer"
+"no_icon_selected": "Aucune icône sélectionnée"
+"details": "Détails"
+"not_specified": "Non spécifié"
+"not_available": "Non disponible"
+"created_at": "Créé le"
+"updated_at": "Mis à jour le"
+"statistics": "Statistiques"
+"usage_count": "Nombre d'utilisations"
+"recent_assignments": "Missions récentes"
+"and_x_more": "et %count% autres"
+"informations": "Informations"
+"warning_assignments_exist": "Attention : Ce type est utilisé par des missions. Les modifications pourraient affecter ces missions."
+
+# Help messages
+"assignment_type":
+  create_help: "Créez un nouveau type de mission pour organiser vos tâches"
+  create_help_1: "Donnez un nom clair et descriptif à votre type de mission"
+  create_help_2: "Ajoutez une description détaillée pour expliquer l'objectif de ce type"
+  create_help_3: "Choisissez une icône pour une identification visuelle rapide"
+  
+  # Flash messages
+  flash:
+    created_successfully: "Le type de mission a été créé avec succès"
+    updated_successfully: "Le type de mission a été mis à jour avec succès"
+    deleted_successfully: "Le type de mission a été supprimé avec succès"
+    cannot_delete_has_assignments: "Impossible de supprimer ce type car il est utilisé par une ou plusieurs missions"
+  
+  # Error messages
+  not_found: "Le type de mission demandé n'a pas été trouvé"
+
+# Generic flash messages
+"flash":
+  error:
+    occurred: "Une erreur s'est produite. Veuillez réessayer."
+  success: "Opération réussie"
+  error: "Une erreur est survenue"
+  access_denied: "Accès refusé. Vous n'avez pas les droits nécessaires pour effectuer cette action."
