@@ -1,0 +1,14 @@
+# Disable messenger for console commands
+framework:
+    messenger:
+        enabled: false
+
+# Disable the default messenger command
+when@console:
+    framework:
+        messenger:
+            transports: []
+            routing: []
+            buses: {}
+            default_bus: null
+            failure_transport: null

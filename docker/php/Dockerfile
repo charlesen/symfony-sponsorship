@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y libzip-dev \
     && docker-php-ext-configure zip \
     && docker-php-ext-install -j$(nproc) zip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli intl xsl bcmath soap sockets opcache pcntl
+    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli intl xsl bcmath soap sockets opcache pcntl zip
 
 # Installation de Redis et autres extensions PECL
 RUN pecl install redis && docker-php-ext-enable redis
@@ -62,7 +62,25 @@ RUN { \
     echo 'disable_functions = '; \
     echo 'allow_url_fopen = On'; \
     echo 'allow_url_include = Off'; \
+    echo 'zend_extension=opcache'; \
+    echo 'opcache.enable=1'; \
+    echo 'opcache.enable_cli=1'; \
+    echo 'opcache.jit=1255'; \
+    echo 'opcache.jit_buffer_size=256M'; \
+    echo 'opcache.memory_consumption=256'; \
+    echo 'opcache.validate_timestamps=0'; \
+    echo 'opcache.save_comments=1'; \
+    echo 'opcache.fast_shutdown=1'; \
+    echo 'opcache.interned_strings_buffer=16'; \
+    echo 'opcache.max_accelerated_files=10000'; \
 } > /usr/local/etc/php/conf.d/custom.ini
+
+# Enable proc_open and other required functions
+RUN { \
+    echo 'disable_functions = '; \
+    echo 'allow_url_fopen = On'; \
+    echo 'allow_url_include = Off'; \
+} > /usr/local/etc/php/conf.d/proc.ini
 
 # Suppression du fichier opcache.ini existant pour éviter les doublons
 RUN rm -f /usr/local/etc/php/conf.d/opcache.ini
