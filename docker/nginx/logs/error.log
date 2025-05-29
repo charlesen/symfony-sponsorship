@@ -2652,3 +2652,4 @@
 2025/05/29 16:37:20 [notice] 1#1: start worker process 25
 2025/05/29 16:37:20 [notice] 1#1: start worker process 26
 2025/05/29 16:37:20 [notice] 1#1: start worker process 27
+2025/05/29 16:39:14 [error] 20#20: *1 FastCGI sent in stderr: "PHP message: 2025-05-29T18:39:14+02:00 [critical] Uncaught Exception: Expected to find class "App\Migrations\Version20240527160000" in file "/var/www/html/src/Migrations/Version20240527160000.php" while importing services from resource "../src/", but it was not found! Check the namespace prefix used with the resource in /var/www/html/config/services.yaml (which is being imported from "/var/www/html/src/Kernel.php")" while reading upstream, client: 172.19.0.1, server: localhost, request: "GET /fr/login HTTP/1.1", upstream: "fastcgi://172.19.0.7:9000", host: "localhost:8080"

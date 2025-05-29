@@ -141,27 +141,10 @@
 "informations": "Informations"
 "warning_assignments_exist": "Attention : Ce type est utilisé par des missions. Les modifications pourraient affecter ces missions."
 
-# Help messages
-"assignment_type":
-  create_help: "Créez un nouveau type de mission pour organiser vos tâches"
-  create_help_1: "Donnez un nom clair et descriptif à votre type de mission"
-  create_help_2: "Ajoutez une description détaillée pour expliquer l'objectif de ce type"
-  create_help_3: "Choisissez une icône pour une identification visuelle rapide"
-  
-  # Flash messages
-  flash:
-    created_successfully: "Le type de mission a été créé avec succès"
-    updated_successfully: "Le type de mission a été mis à jour avec succès"
-    deleted_successfully: "Le type de mission a été supprimé avec succès"
-    cannot_delete_has_assignments: "Impossible de supprimer ce type car il est utilisé par une ou plusieurs missions"
-  
-  # Error messages
-  not_found: "Le type de mission demandé n'a pas été trouvé"
-
 # Generic flash messages
 "flash":
   error:
     occurred: "Une erreur s'est produite. Veuillez réessayer."
+    general: "Une erreur est survenue"
   success: "Opération réussie"
-  error: "Une erreur est survenue"
   access_denied: "Accès refusé. Vous n'avez pas les droits nécessaires pour effectuer cette action."
