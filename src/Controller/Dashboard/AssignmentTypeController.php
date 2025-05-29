@@ -42,6 +42,7 @@ final class AssignmentTypeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+
                 $this->entityManager->persist($assignmentType);
                 $this->entityManager->flush();
 

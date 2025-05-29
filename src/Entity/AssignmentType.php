@@ -9,10 +9,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AssignmentTypeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AssignmentType
 {
     use Timestampable;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -104,7 +105,7 @@ class AssignmentType
     }
 
 
-    
+
     public function __toString(): string
     {
         return (string) $this->getTitle();
