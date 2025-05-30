@@ -55,6 +55,14 @@ about:
   description: "Charles EDOU NZE est ingénieur en informatique, entrepreneur et pasteur. Passionné par la finance, la productivité, les sciences, la philosophie et la vie chrétienne pratique, il écrit pour transformer des idées en actions et aider chacun à atteindre le but pour lequel il a été créé."
 "Contact": "Contact"
 
+"landing":
+  title: "Vaincre ses montagnes commence ici."
+  description: "Découvrez un livre, une méthode, une communauté pour surmonter ce qui vous bloque."
+
+"newsletter":
+  title: "Newsletter"
+  description: "Recevez mes dernières actualités et conseils pour surmonter ce qui vous bloque."
+
 # --- Application ---
 "Please log in": "Veuillez vous connecter"
 "Email": "E-mail"

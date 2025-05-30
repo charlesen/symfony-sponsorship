@@ -1,126 +1,118 @@
-<div class="min-h-screen bg-base-200 flex items-center justify-center p-4">
-  <div class="card w-full max-w-md bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title text-2xl font-bold mb-6">Inscription à la newsletter</h2>
-      
-      <!-- Message d'erreur -->
-      <div id="error-message" class="alert alert-error hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+<!-- Begin Brevo Form -->
+<!-- START - We recommend to place the below code in head tag of your website html  -->
+<style>
+
+
+  #sib-container input:-ms-input-placeholder {
+    text-align: left;
+    font-family: Helvetica, sans-serif;
+    color: #c0ccda;
+  }
+
+  #sib-container input::placeholder {
+    text-align: left;
+    font-family: Helvetica, sans-serif;
+    color: #c0ccda;
+  }
+
+  #sib-container textarea::placeholder {
+    text-align: left;
+    font-family: Helvetica, sans-serif;
+    color: #c0ccda;
+  }
+
+  #sib-container a {
+    text-decoration: underline;
+    color: #2BB2FC;
+  }
+</style>
+<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+<!--  END - We recommend to place the above code in head tag of your website html -->
+
+<!-- START - We recommend to place the below code where you want the form in your website html  -->
+<div>
+  <div id="sib-form-container" class="space-y-4 border bg-primary text-primary-content">
+    <div id="error-message" class="sib-form-message-panel">
+      <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+        <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+          <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" />
         </svg>
-        <span>Une erreur est survenue. Veuillez réessayer.</span>
+        <span class="sib-form-message-panel__inner-text">
+                          Nous n&#039;avons pas pu confirmer votre inscription.
+                      </span>
       </div>
-      
-      <!-- Message de succès -->
-      <div id="success-message" class="alert alert-success hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </div>
+    <div></div>
+    <div id="success-message" class="sib-form-message-panel">
+      <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+        <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+          <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
         </svg>
-        <span>Votre inscription a bien été prise en compte !</span>
+        <span class="sib-form-message-panel__inner-text">
+                          Votre inscription est confirmée.
+                      </span>
       </div>
-      
-      <form id="sib-form" method="POST" action="https://8af91d90.sibforms.com/serve/MUIFABgbiCqVSH89jdOBbon_YF6O-ka6Kbl-Ewnbgho0cZ3g_pu9ker7cekRsJV_FICAgmb8dWuqo-jWoeIM5JTuG1eQiq-BL6y41xnnQOJE4uKiG6IDXKMCNV8ejeKgxFnZGIoMWdZIdE0UBN0tfLmsNVaIDQjh3Ee4s5F4wxTmpeZN3EIrqKVz3HZsTxUiMBsGffsD3RhPpACk" data-type="subscription" class="space-y-4">
-        <!-- Champ Prénom -->
-        <div class="form-control w-full">
-          <label class="label" for="PRENOM">
-            <span class="label-text">Prénom <span class="text-error">*</span></span>
-          </label>
-          <input 
-            type="text" 
-            id="PRENOM" 
-            name="PRENOM" 
-            required 
-            class="input input-bordered w-full"
-            placeholder="Votre prénom"
-          >
-          <label class="label">
-            <span class="label-text-alt">C'est plus sympa de communiquer avec un prénom</span>
-          </label>
-        </div>
+    </div>
+    <div></div>
+    <div class="sib-container--large sib-container--vertical bg-base-100 dark:bg-neutral-900 border border-base-300 dark:border-neutral-700 rounded-xl shadow-md">
+      <form id="sib-form" method="POST" action="https://8af91d90.sibforms.com/serve/MUIFALKf6R4oqv4ZR9kudbYqd3GtoM3yZPY-JYjDaBE1CDTM9kezcwQLFmYlGsmrEARfGiTl60BGr3tHQ_IgPfqPRaE-_9NrIe-G9cGw_zRbCvBdYwVG0Et44EmhFr9asGpQ5Z3VOkBYtpAaaaOr4TEXkAfCFwv3LKNe_cCOI2kiO-81NWt7GAyBbxWdLbUyveiL6zAYxb0pxjxD" data-type="subscription">
+        
+      <div class="mb-4">
+  <label for="PRENOM" class="block mb-1 text-sm font-semibold text-gray-800 dark:text-gray-200">Prénom</label>
+  <input type="text" id="PRENOM" name="PRENOM" required
+         class="input input-bordered w-full bg-white dark:bg-neutral text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-neutral-700"
+         placeholder="Votre prénom">
+</div>
 
-        <!-- Champ Email -->
-        <div class="form-control w-full">
-          <label class="label" for="EMAIL">
-            <span class="label-text">Email <span class="text-error">*</span></span>
-          </label>
-          <input 
-            type="email" 
-            id="EMAIL" 
-            name="EMAIL" 
-            required 
-            class="input input-bordered w-full"
-            placeholder="votre@email.com"
-          >
-          <label class="label">
-            <span class="label-text-alt">Veuillez renseigner votre adresse email</span>
-          </label>
-        </div>
+<div class="mb-6">
+  <label for="EMAIL" class="block mb-1 text-sm font-semibold text-gray-800 dark:text-gray-200">Email</label>
+  <input type="email" id="EMAIL" name="EMAIL" required
+         class="input input-bordered w-full bg-white dark:bg-neutral text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-neutral-700"
+         placeholder="email@exemple.com">
+</div>
 
-        <!-- Case à cocher RGPD -->
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input 
-              type="checkbox" 
-              id="OPT_IN" 
-              name="OPT_IN" 
-              class="checkbox checkbox-primary" 
-              required
-            />
-            <span class="label-text">
-              J'accepte de recevoir vos e-mails et confirme avoir pris connaissance de votre 
-              <a href="#" class="link link-primary">politique de confidentialité</a> et 
-              <a href="#" class="link link-primary">mentions légales</a>.
-            </span>
-          </label>
-          <label class="label">
-            <span class="label-text-alt">
-              Vous pouvez vous désinscrire à tout moment en cliquant sur le lien présent dans nos emails.
-            </span>
-          </label>
-        </div>
 
-        <!-- Bouton de soumission -->
-        <div class="form-control mt-6">
-          <button type="submit" class="btn btn-primary w-full">
-            S'INSCRIRE
+        <div class="mb-6">
+          <button class="btn btn-primary btn-block sib-form-block__button sib-form-block__button-with-loader" form="sib-form" type="submit">
+            <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
+              <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
+            </svg>
+            S&#039;INSCRIRE
           </button>
         </div>
 
-        <!-- Mentions légales -->
-        <div class="text-xs text-base-content/70 mt-4">
-          <p>Nous utilisons Brevo en tant que plateforme marketing. En soumettant ce formulaire, vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément à la <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank" class="link link-primary">politique de confidentialité de Brevo</a>.</p>
-        </div>
-
-        <!-- Champs cachés -->
-        <input type="text" name="email_address_check" value="" class="hidden">
+        <input type="text" name="email_address_check" value="" class="input--hidden">
         <input type="hidden" name="locale" value="fr">
       </form>
     </div>
   </div>
 </div>
 
-<!-- Script Brevo -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('sib-form');
-    const errorMessage = document.getElementById('error-message');
-    const successMessage = document.getElementById('success-message');
-
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        // Réinitialiser les messages
-        if (errorMessage) errorMessage.classList.add('hidden');
-        if (successMessage) successMessage.classList.add('hidden');
-      });
-    }
-  });
-
-  // Configuration Brevo
   window.REQUIRED_CODE_ERROR_MESSAGE = 'Veuillez choisir un code pays';
   window.LOCALE = 'fr';
   window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Les informations que vous avez fournies ne sont pas valides. Veuillez vérifier le format du champ et réessayer.";
-  window.REQUIRED_ERROR_MESSAGE = "Vous devez renseigner ce champ.";
+
+  window.REQUIRED_ERROR_MESSAGE = "Vous devez renseigner ce champ. ";
+
   window.GENERIC_INVALID_MESSAGE = "Les informations que vous avez fournies ne sont pas valides. Veuillez vérifier le format du champ et réessayer.";
+
+
+
+
+  window.translation = {
+    common: {
+      selectedList: '{quantity} liste sélectionnée',
+      selectedLists: '{quantity} listes sélectionnées',
+      selectedOption: '{quantity} sélectionné',
+      selectedOptions: '{quantity} sélectionnés',
+    }
+  };
+
+  var AUTOHIDE = Boolean(0);
 </script>
-<script src="https://sibforms.com/forms/end-form/build/main.js"></script>
-<script src="https://www.google.com/recaptcha/api.js?hl=fr"></script>
+
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+
+<!-- End Brevo Form -->

@@ -2788,3 +2788,114 @@
 2025/05/30 10:19:31 [error] 21#21: *272 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
 2025/05/30 10:20:33 [error] 21#21: *272 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
 2025/05/30 10:21:09 [error] 21#21: *278 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:26:21 [error] 23#23: *285 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:27:14 [error] 23#23: *285 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:27:39 [error] 23#23: *285 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:27:58 [error] 23#23: *285 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:28:21 [error] 23#23: *302 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:29:01 [error] 23#23: *285 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:29:05 [error] 23#23: *302 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:29:14 [error] 23#23: *285 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:29:42 [error] 23#23: *292 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:30:05 [error] 23#23: *292 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:30:21 [error] 23#23: *292 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:31:49 [error] 23#23: *333 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:32:49 [error] 23#23: *333 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:34:53 [error] 23#23: *333 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:35:02 [error] 23#23: *333 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:47:46 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2025/05/30 10:47:46 [notice] 21#21: gracefully shutting down
+2025/05/30 10:47:46 [notice] 23#23: gracefully shutting down
+2025/05/30 10:47:46 [notice] 22#22: gracefully shutting down
+2025/05/30 10:47:46 [notice] 26#26: gracefully shutting down
+2025/05/30 10:47:46 [notice] 20#20: gracefully shutting down
+2025/05/30 10:47:46 [notice] 24#24: gracefully shutting down
+2025/05/30 10:47:46 [notice] 25#25: gracefully shutting down
+2025/05/30 10:47:46 [notice] 26#26: exiting
+2025/05/30 10:47:46 [notice] 21#21: exiting
+2025/05/30 10:47:46 [notice] 20#20: exiting
+2025/05/30 10:47:46 [notice] 25#25: exiting
+2025/05/30 10:47:46 [notice] 22#22: exiting
+2025/05/30 10:47:46 [notice] 26#26: exit
+2025/05/30 10:47:46 [notice] 20#20: exit
+2025/05/30 10:47:46 [notice] 21#21: exit
+2025/05/30 10:47:46 [notice] 22#22: exit
+2025/05/30 10:47:46 [notice] 27#27: gracefully shutting down
+2025/05/30 10:47:46 [notice] 23#23: exiting
+2025/05/30 10:47:46 [notice] 27#27: exiting
+2025/05/30 10:47:46 [notice] 23#23: exit
+2025/05/30 10:47:46 [notice] 25#25: exit
+2025/05/30 10:47:46 [notice] 27#27: exit
+2025/05/30 10:47:46 [notice] 1#1: signal 17 (SIGCHLD) received from 26
+2025/05/30 10:47:46 [notice] 1#1: worker process 26 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: signal 29 (SIGIO) received
+2025/05/30 10:47:46 [notice] 1#1: signal 17 (SIGCHLD) received from 21
+2025/05/30 10:47:46 [notice] 1#1: worker process 21 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: signal 29 (SIGIO) received
+2025/05/30 10:47:46 [notice] 1#1: signal 17 (SIGCHLD) received from 23
+2025/05/30 10:47:46 [notice] 1#1: worker process 23 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: signal 29 (SIGIO) received
+2025/05/30 10:47:46 [notice] 1#1: signal 17 (SIGCHLD) received from 22
+2025/05/30 10:47:46 [notice] 1#1: worker process 20 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: worker process 22 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: worker process 25 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: worker process 27 exited with code 0
+2025/05/30 10:47:46 [notice] 1#1: signal 29 (SIGIO) received
+2025/05/30 10:47:46 [notice] 1#1: signal 17 (SIGCHLD) received from 20
+2025/05/30 10:47:57 [notice] 1#1: using the "epoll" event method
+2025/05/30 10:47:57 [notice] 1#1: nginx/1.27.5
+2025/05/30 10:47:57 [notice] 1#1: built by gcc 14.2.0 (Alpine 14.2.0) 
+2025/05/30 10:47:57 [notice] 1#1: OS: Linux 6.6.87.1-microsoft-standard-WSL2
+2025/05/30 10:47:57 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2025/05/30 10:47:57 [notice] 1#1: start worker processes
+2025/05/30 10:47:57 [notice] 1#1: start worker process 20
+2025/05/30 10:47:57 [notice] 1#1: start worker process 21
+2025/05/30 10:47:57 [notice] 1#1: start worker process 22
+2025/05/30 10:47:57 [notice] 1#1: start worker process 23
+2025/05/30 10:47:57 [notice] 1#1: start worker process 24
+2025/05/30 10:47:57 [notice] 1#1: start worker process 25
+2025/05/30 10:47:57 [notice] 1#1: start worker process 26
+2025/05/30 10:47:57 [notice] 1#1: start worker process 27
+2025/05/30 10:54:11 [error] 24#24: *35 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:55:09 [error] 24#24: *35 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:55:28 [error] 24#24: *35 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:56:07 [error] 24#24: *35 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 10:57:22 [error] 20#20: *80 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:00:08 [error] 20#20: *87 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:01:49 [error] 20#20: *94 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:02:03 [error] 20#20: *94 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:02:34 [error] 20#20: *94 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:03:50 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:04:04 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:04:23 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:04:34 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:04:58 [error] 21#21: *145 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:05:47 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:06:44 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:07:00 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:07:16 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:07:25 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:08:18 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:08:33 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:08:39 [error] 21#21: *117 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:09:08 [error] 21#21: *183 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:09:27 [error] 21#21: *183 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:09:39 [error] 21#21: *183 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:10:55 [error] 21#21: *183 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:12:05 [error] 22#22: *210 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:12:09 [error] 22#22: *210 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:13:55 [error] 22#22: *220 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:15:12 [error] 22#22: *227 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:16:10 [error] 22#22: *227 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:16:28 [error] 22#22: *239 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:16:58 [error] 22#22: *239 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:17:25 [error] 22#22: *239 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:17:37 [error] 22#22: *239 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:18:50 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:19:02 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:19:27 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:20:02 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:20:19 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:20:28 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:20:52 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/05/30 11:21:48 [error] 23#23: *316 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
