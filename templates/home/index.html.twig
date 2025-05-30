@@ -12,11 +12,11 @@
     </div>
     <div class="flex-1 mt-4 md:mt-0">
         <div class="card bg-base-100 shadow-xl p-8 dark:bg-neutral-900">
-    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-neutral dark:text-white">
-        {{"My new book is now available on Amazon"|trans}}
+    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-dark dark:text-dark">
+        {{"landing.title"|trans}}
     </h2>
     <p class="mb-6 font-light text-neutral-600 dark:text-neutral-300 md:text-lg">
-        {{"I am very happy to announce that my new book is now available on Amazon"|trans}}
+        {{"landing.description"|trans}}
     </p>
     <a href="https://amzn.to/4jAqMLY" class="btn btn-primary" target="_blank">
         {{"Buy now"|trans}}
@@ -30,9 +30,9 @@
 <section id="about" class="my-16 flex justify-center">
     <div class="card w-full max-w-2xl bg-base-100 shadow-xl dark:bg-neutral-900">
         <div class="card-body">
-            <h3 class="card-title text-2xl text-neutral dark:text-white mb-2">{{ 'About me'|trans }}</h3>
+            <h3 class="card-title text-2xl text-dark dark:text-dark mb-2">{{ 'about.title'|trans }}</h3>
             <p class="text-neutral-600 dark:text-neutral-300">
-                {{ "I'm Charles EDOU NZE, a passionate developer and writer. I love building tools that empower people and sharing knowledge through my books and open source projects."|trans }}
+                {{ "about.description"|trans }}
             </p>
         </div>
     </div>
@@ -40,6 +40,15 @@
 
 <!-- Contact Section -->
 <section id="contact" class="my-8 flex justify-center">
+<div class="card w-full max-w-2xl bg-base-100 shadow-xl dark:bg-neutral-900">
+        <div class="card-body">
+            <h3 class="card-title text-2xl text-dark dark:text-dark mb-2">{{ 'newsletter.title'|trans }}</h3>
+            <p class="text-neutral-600 dark:text-neutral-300">
+                {{ "newsletter.description"|trans }}
+            </p>
+            {{ include('newsletter/_form.html.twig') }}
+        </div>
+    </div>
     <div class="card w-full max-w-2xl bg-base-100 shadow-xl dark:bg-neutral-900">
         <div class="card-body">
             <h3 class="card-title text-2xl text-neutral dark:text-white mb-2">{{ 'Contact'|trans }}</h3>

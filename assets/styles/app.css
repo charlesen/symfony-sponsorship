@@ -1,14 +1,15 @@
-@import "tailwindcss";
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark, cupcake;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
 
 /* Icon Picker Styles */
-#iconPickerModal .modal-dialog {
+.icon-picker-modal .modal-dialog {
     max-width: 800px;
 }
 
-#iconPickerModal .icon-grid {
+.icon-picker-modal .icon-grid {
     max-height: 60vh;
     overflow-y: auto;
     padding: 1rem 0;
