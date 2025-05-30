@@ -76,6 +76,7 @@
           </a>
         </li>
         
+        {% if is_granted('ROLE_ADMIN') %}
         <li class="menu-title mt-4">
           <span>{{ 'Management'|trans }}</span>
         </li>
@@ -86,7 +87,14 @@
             </svg>
             {{ 'Assignments'|trans }}
           </a>
+          <a href="{{ path('dashboard_assignment_type_index') }}" class="{{ 'dashboard_assignment_type_' in app.request.get('_route') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0l9-9" />
+            </svg>
+            {{ 'Assignment types'|trans }}
+          </a>  
         </li>
+        {% endif %}
       </ul>
     </aside>
   </div>

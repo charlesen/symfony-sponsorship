@@ -1,34 +1,132 @@
 {% extends 'dashboard/layout.html.twig' %}
 
-{% block title %}AssignmentType{% endblock %}
+{% block title %}{{ 'assignment_type.actions.show'|trans }} - {{ assignment_type.title }}{% endblock %}
 
 {% block content %}
-    <h1>AssignmentType</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">
+            {% if assignment_type.icon %}
+                <i class="{{ assignment_type.icon }} me-2"></i>
+            {% endif %}
+            {{ assignment_type.title }}
+        </h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a href="{{ path('dashboard_assignment_type_edit', {'id': assignment_type.id}) }}" 
+                   class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-edit me-1"></i> {{ 'edit'|trans }}
+                </a>
+                <a href="{{ path('dashboard_assignment_type_index') }}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> {{ 'assignment_type.actions.back_to_list'|trans }}
+                </a>
+            </div>
+            {{ include('dashboard/assignment_type/_delete_form.html.twig') }}
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ assignment_type.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ assignment_type.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ assignment_type.description }}</td>
-            </tr>
-            <tr>
-                <th>Icon</th>
-                <td>{{ assignment_type.icon }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ 'details'|trans }}</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">{{ 'assignment_type.form.title.label'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if assignment_type.icon %}
+                                <i class="{{ assignment_type.icon }} me-2"></i>
+                            {% endif %}
+                            {{ assignment_type.title }}
+                        </dd>
 
-    <a href="{{ path('dashboard_assignment_type_index') }}">back to list</a>
+                        <dt class="col-sm-3">{{ 'assignment_type.form.description.label'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {{ assignment_type.description|default('<em class="text-muted">' ~ 'not_specified'|trans ~ '</em>')|raw }}
+                        </dd>
 
-    <a href="{{ path('dashboard_assignment_type_edit', {'id': assignment_type.id}) }}">edit</a>
+                        <dt class="col-sm-3">{{ 'assignment_type.form.icon.label'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if assignment_type.icon %}
+                                <code>{{ assignment_type.icon }}</code>
+                                <div class="mt-2">
+                                    <i class="{{ assignment_type.icon }} fa-2x"></i>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">{{ 'not_specified'|trans }}</span>
+                            {% endif %}
+                        </dd>
 
-    {{ include('dashboard/assignment_type/_delete_form.html.twig') }}
+                        <dt class="col-sm-3">{{ 'created_at'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if assignment_type.createdAt %}
+                                {{ assignment_type.createdAt|date('d/m/Y H:i') }}
+                            {% else %}
+                                <span class="text-muted">{{ 'not_available'|trans }}</span>
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3">{{ 'updated_at'|trans }}</dt>
+                        <dd class="col-sm-9">
+                            {% if assignment_type.updatedAt %}
+                                {{ assignment_type.updatedAt|date('d/m/Y H:i') }}
+                            {% else %}
+                                <span class="text-muted">{{ 'not_available'|trans }}</span>
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">{{ 'statistics'|trans }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        {% if assignment_type.icon %}
+                            <i class="{{ assignment_type.icon }} fa-5x text-primary mb-3"></i>
+                        {% else %}
+                            <i class="fas fa-tasks fa-5x text-muted mb-3"></i>
+                        {% endif %}
+                        <h4>{{ assignment_type.title }}</h4>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">{{ 'usage_count'|trans }}:</span>
+                        <span class="fw-bold">{{ assignment_type.assignments|length }}</span>
+                    </div>
+                    
+                    {% if assignment_type.assignments|length > 0 %}
+                        <div class="mt-3">
+                            <h6 class="text-muted">{{ 'recent_assignments'|trans }}:</h6>
+                            <ul class="list-group list-group-flush">
+                                {% for assignment in assignment_type.assignments|slice(0, 5) %}
+                                    <li class="list-group-item px-0 py-2">
+                                        <a href="{{ path('dashboard_assignment_show', {'id': assignment.id}) }}" class="text-decoration-none">
+                                            {{ assignment.title }}
+                                        </a>
+                                        <small class="text-muted d-block">
+                                            {{ assignment.createdAt|date('d/m/Y') }}
+                                        </small>
+                                    </li>
+                                {% endfor %}
+                                {% if assignment_type.assignments|length > 5 %}
+                                    <li class="list-group-item px-0 py-2 text-center">
+                                        <small class="text-muted">
+                                            {{ 'and_x_more'|trans({'%count%': assignment_type.assignments|length - 5}) }}
+                                        </small>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

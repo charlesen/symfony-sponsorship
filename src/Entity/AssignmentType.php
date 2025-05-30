@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\AssignmentTypeRepository;
+use App\Trait\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AssignmentTypeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AssignmentType
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -29,6 +33,8 @@ class AssignmentType
      */
     #[ORM\OneToMany(mappedBy: 'type', targetEntity: Assignment::class)]
     private Collection $assignments;
+
+
 
     public function __construct()
     {
@@ -96,5 +102,12 @@ class AssignmentType
     {
         $this->icon = $icon;
         return $this;
+    }
+
+
+
+    public function __toString(): string
+    {
+        return (string) $this->getTitle();
     }
 }

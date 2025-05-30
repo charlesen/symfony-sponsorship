@@ -3,14 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\AssignmentRepository;
+use App\Trait\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AssignmentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Assignment
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -38,9 +42,7 @@ class Assignment
     #[ORM\JoinColumn(nullable: false)]
     private ?AssignmentType $type = null;
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function getId(): ?int
     {

@@ -43,15 +43,23 @@ class AssignmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'dashboard_assignment_show', methods: ['GET'])]
-    public function show(Assignment $assignment): Response
+    #[Route('/{id}', name: 'dashboard_assignment_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function show(Request $request, AssignmentRepository $assignmentRepository): Response
     {
+        $id = $request->attributes->get('id');
+        $assignment = $assignmentRepository->find($id);
+
+        if (!$assignment) {
+            $this->addFlash('error', 'general', 'Assignment non trouvé.');
+            return $this->redirectToRoute('dashboard_assignment_index');
+        }
+
         return $this->render('dashboard/assignment/show.html.twig', [
             'assignment' => $assignment,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'dashboard_assignment_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'dashboard_assignment_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Assignment $assignment, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AssignmentFormType::class, $assignment);
@@ -69,7 +77,7 @@ class AssignmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'dashboard_assignment_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'dashboard_assignment_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function delete(Request $request, Assignment $assignment, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $assignment->getId(), $request->request->get('_token'))) {

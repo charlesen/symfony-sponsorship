@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Enum\UserAssignmentStatus;
 use App\Repository\UserAssignmentRepository;
+use App\Trait\Timestampable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserAssignmentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class UserAssignment
 {
+    use Timestampable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -179,11 +183,11 @@ class UserAssignment
         $this->status = UserAssignmentStatus::COMPLETED;
         $this->completedAt = new \DateTimeImmutable();
         $this->data = $data;
-        
+
         // Par défaut, les points gagnés sont ceux de la mission
         // Peut être personnalisé si nécessaire
         $this->pointsEarned = $this->assignment?->getPoints() ?? 0;
-        
+
         return $this;
     }
 }

@@ -1,4 +1,89 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="mb-3">
+                {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control' ~ (form.title.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+                <div class="invalid-feedback">
+                    {{ form_errors(form.title) }}
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control' ~ (form.description.vars.errors|length > 0 ? ' is-invalid' : ''), 'rows': 3}}) }}
+                <div class="invalid-feedback">
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+            
+            <div class="mb-3" data-controller="icon-preview">
+                {{ form_label(form.icon, null, {'label_attr': {'class': 'form-label'}}) }}
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-icons"></i></span>
+                    {{ form_widget(form.icon, {'attr': {
+                        'class': 'form-control' ~ (form.icon.vars.errors|length > 0 ? ' is-invalid' : ''),
+                        'placeholder': 'fas fa-icon',
+                        'data-icon-preview-target': 'iconInput',
+                        'data-action': 'input->icon-preview#updatePreview'
+                    }}) }}
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#iconPickerModal">
+                        <i class="fas fa-search me-1"></i> {{ 'choose_icon'|trans }}
+                    </button>
+                </div>
+                <div class="form-text">{{ form.icon.vars.help|trans }}</div>
+                <div class="invalid-feedback">
+                    {{ form_errors(form.icon) }}
+                </div>
+                <div class="mt-2">
+                    <small class="text-muted">{{ 'preview'|trans }}: </small>
+                    <span class="ms-2" data-icon-preview-target="iconPreview">
+                        <i class="fas fa-question-circle"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-footer bg-light d-flex justify-content-between">
+            <a href="{{ path('dashboard_assignment_type_index') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i> {{ 'assignment_type.actions.back_to_list'|trans }}
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-1"></i> {{ button_label|default('save'|trans) }}
+            </button>
+        </div>
+    </div>
 {{ form_end(form) }}
+
+<!-- Icon Picker Modal -->
+<div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerModalLabel" aria-hidden="true" data-controller="icon-picker">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="iconPickerModalLabel">{{ 'choose_icon'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'close'|trans }}"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="{{ 'search_icons'|trans }}..." data-icon-picker-target="searchInput">
+                    </div>
+                </div>
+                
+                <div class="icon-grid" data-icon-picker-target="iconGrid">
+                    <!-- Icons will be loaded here by JavaScript -->
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">{{ 'loading'|trans }}...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ 'cancel'|trans }}</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ 'select_icon'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

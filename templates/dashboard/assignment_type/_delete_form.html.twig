@@ -1,4 +1,11 @@
-<form method="post" action="{{ path('dashboard_assignment_type_delete', {'id': assignment_type.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assignment_type.id) }}">
-    <button class="btn">Delete</button>
-</form>
+{% if is_granted('ROLE_ADMIN') %}
+    <form method="post" 
+          action="{{ path('dashboard_assignment_type_delete', {'id': assignment_type.id}) }}" 
+          onsubmit="return confirm('{{ 'assignment_type.actions.are_you_sure'|trans }}');"
+          class="d-inline">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assignment_type.id) }}">
+        <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ 'delete'|trans }}">
+            <i class="fas fa-trash me-1"></i> {{ 'delete'|trans }}
+        </button>
+    </form>
+{% endif %}
