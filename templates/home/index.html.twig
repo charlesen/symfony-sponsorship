@@ -30,12 +30,17 @@
 <section id="about" class="my-16 flex justify-center">
     <div class="card w-full max-w-2xl bg-base-100 shadow-xl dark:bg-neutral-900">
         <div class="card-body">
-            <h3 class="card-title text-2xl text-neutral dark:text-white mb-2">{{ 'About me'|trans }}</h3>
+            <h3 class="card-title text-2xl text-neutral dark:text-white mb-2">{{ 'about.title'|trans }}</h3>
             <p class="text-neutral-600 dark:text-neutral-300">
-                {{ "I'm Charles EDOU NZE, a passionate developer and writer. I love building tools that empower people and sharing knowledge through my books and open source projects."|trans }}
+                {{ "about.description"|trans }}
             </p>
         </div>
     </div>
+</section>
+
+<!-- Newsletter Section -->
+<section id="newsletter" class="my-16 flex justify-center">
+    {{ include('newsletter/_form.html.twig') }}
 </section>
 
 <!-- Contact Section -->

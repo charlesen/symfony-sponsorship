@@ -1,0 +1,126 @@
+<div class="min-h-screen bg-base-200 flex items-center justify-center p-4">
+  <div class="card w-full max-w-md bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-2xl font-bold mb-6">Inscription à la newsletter</h2>
+      
+      <!-- Message d'erreur -->
+      <div id="error-message" class="alert alert-error hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Une erreur est survenue. Veuillez réessayer.</span>
+      </div>
+      
+      <!-- Message de succès -->
+      <div id="success-message" class="alert alert-success hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Votre inscription a bien été prise en compte !</span>
+      </div>
+      
+      <form id="sib-form" method="POST" action="https://8af91d90.sibforms.com/serve/MUIFABgbiCqVSH89jdOBbon_YF6O-ka6Kbl-Ewnbgho0cZ3g_pu9ker7cekRsJV_FICAgmb8dWuqo-jWoeIM5JTuG1eQiq-BL6y41xnnQOJE4uKiG6IDXKMCNV8ejeKgxFnZGIoMWdZIdE0UBN0tfLmsNVaIDQjh3Ee4s5F4wxTmpeZN3EIrqKVz3HZsTxUiMBsGffsD3RhPpACk" data-type="subscription" class="space-y-4">
+        <!-- Champ Prénom -->
+        <div class="form-control w-full">
+          <label class="label" for="PRENOM">
+            <span class="label-text">Prénom <span class="text-error">*</span></span>
+          </label>
+          <input 
+            type="text" 
+            id="PRENOM" 
+            name="PRENOM" 
+            required 
+            class="input input-bordered w-full"
+            placeholder="Votre prénom"
+          >
+          <label class="label">
+            <span class="label-text-alt">C'est plus sympa de communiquer avec un prénom</span>
+          </label>
+        </div>
+
+        <!-- Champ Email -->
+        <div class="form-control w-full">
+          <label class="label" for="EMAIL">
+            <span class="label-text">Email <span class="text-error">*</span></span>
+          </label>
+          <input 
+            type="email" 
+            id="EMAIL" 
+            name="EMAIL" 
+            required 
+            class="input input-bordered w-full"
+            placeholder="votre@email.com"
+          >
+          <label class="label">
+            <span class="label-text-alt">Veuillez renseigner votre adresse email</span>
+          </label>
+        </div>
+
+        <!-- Case à cocher RGPD -->
+        <div class="form-control">
+          <label class="label cursor-pointer justify-start gap-3">
+            <input 
+              type="checkbox" 
+              id="OPT_IN" 
+              name="OPT_IN" 
+              class="checkbox checkbox-primary" 
+              required
+            />
+            <span class="label-text">
+              J'accepte de recevoir vos e-mails et confirme avoir pris connaissance de votre 
+              <a href="#" class="link link-primary">politique de confidentialité</a> et 
+              <a href="#" class="link link-primary">mentions légales</a>.
+            </span>
+          </label>
+          <label class="label">
+            <span class="label-text-alt">
+              Vous pouvez vous désinscrire à tout moment en cliquant sur le lien présent dans nos emails.
+            </span>
+          </label>
+        </div>
+
+        <!-- Bouton de soumission -->
+        <div class="form-control mt-6">
+          <button type="submit" class="btn btn-primary w-full">
+            S'INSCRIRE
+          </button>
+        </div>
+
+        <!-- Mentions légales -->
+        <div class="text-xs text-base-content/70 mt-4">
+          <p>Nous utilisons Brevo en tant que plateforme marketing. En soumettant ce formulaire, vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément à la <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank" class="link link-primary">politique de confidentialité de Brevo</a>.</p>
+        </div>
+
+        <!-- Champs cachés -->
+        <input type="text" name="email_address_check" value="" class="hidden">
+        <input type="hidden" name="locale" value="fr">
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Script Brevo -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('sib-form');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        // Réinitialiser les messages
+        if (errorMessage) errorMessage.classList.add('hidden');
+        if (successMessage) successMessage.classList.add('hidden');
+      });
+    }
+  });
+
+  // Configuration Brevo
+  window.REQUIRED_CODE_ERROR_MESSAGE = 'Veuillez choisir un code pays';
+  window.LOCALE = 'fr';
+  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Les informations que vous avez fournies ne sont pas valides. Veuillez vérifier le format du champ et réessayer.";
+  window.REQUIRED_ERROR_MESSAGE = "Vous devez renseigner ce champ.";
+  window.GENERIC_INVALID_MESSAGE = "Les informations que vous avez fournies ne sont pas valides. Veuillez vérifier le format du champ et réessayer.";
+</script>
+<script src="https://sibforms.com/forms/end-form/build/main.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?hl=fr"></script>
