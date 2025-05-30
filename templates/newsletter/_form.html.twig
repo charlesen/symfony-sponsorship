@@ -58,17 +58,21 @@
       <form id="sib-form" method="POST" action="https://8af91d90.sibforms.com/serve/MUIFALKf6R4oqv4ZR9kudbYqd3GtoM3yZPY-JYjDaBE1CDTM9kezcwQLFmYlGsmrEARfGiTl60BGr3tHQ_IgPfqPRaE-_9NrIe-G9cGw_zRbCvBdYwVG0Et44EmhFr9asGpQ5Z3VOkBYtpAaaaOr4TEXkAfCFwv3LKNe_cCOI2kiO-81NWt7GAyBbxWdLbUyveiL6zAYxb0pxjxD" data-type="subscription">
         
       <div class="mb-4">
-  <label for="PRENOM" class="block mb-1 text-sm font-semibold text-gray-800 dark:text-gray-200">Prénom</label>
+  <label for="PRENOM" class="block mb-1 text-sm font-semibold text-gray-800 dark:text-gray-200">
+    {{ 'newsletter.form.firstname'|trans }}
+  </label>
   <input type="text" id="PRENOM" name="PRENOM" required
          class="input input-bordered w-full bg-white dark:bg-neutral text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-neutral-700"
-         placeholder="Votre prénom">
+         placeholder="{{ 'newsletter.form.placeholder.firstname'|trans }}">
 </div>
 
 <div class="mb-6">
-  <label for="EMAIL" class="block mb-1 text-sm font-semibold text-gray-800 dark:text-gray-200">Email</label>
+  <label for="EMAIL" class="block mb-1 text-sm font-semibold text-gray-800 dark:text-gray-200"> 
+    {{ 'newsletter.form.email'|trans }}
+  </label>
   <input type="email" id="EMAIL" name="EMAIL" required
          class="input input-bordered w-full bg-white dark:bg-neutral text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border border-gray-300 dark:border-neutral-700"
-         placeholder="email@exemple.com">
+         placeholder="{{ 'newsletter.form.placeholder.email'|trans }}">
 </div>
 
 
@@ -77,12 +81,12 @@
             <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
               <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
             </svg>
-            S&#039;INSCRIRE
+            {{ 'newsletter.form.subscribe'|trans }}
           </button>
         </div>
 
         <input type="text" name="email_address_check" value="" class="input--hidden">
-        <input type="hidden" name="locale" value="fr">
+        <input type="hidden" name="locale" value="{{app.request.locale}}">
       </form>
     </div>
   </div>

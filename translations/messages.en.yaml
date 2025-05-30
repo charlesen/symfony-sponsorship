@@ -9,3 +9,12 @@
 "newsletter":
   title: "Newsletter"
   description: "Receive my latest news and tips to conquer what blocks you."
+  form:
+    subscribe: "Subscribe"
+    firstname: "First name"
+    lastname: "Last name"
+    email: "Email"
+    placeholder:
+      firstname: "Type your first name"
+      lastname: "Type your last name"
+      email: "Type your email"

@@ -62,6 +62,15 @@ about:
 "newsletter":
   title: "Newsletter"
   description: "Recevez mes dernières actualités et conseils pour surmonter ce qui vous bloque."
+  form:
+    subscribe: "S'abonner"
+    firstname: "Prénom"
+    lastname: "Nom"
+    email: "Email"
+    placeholder:
+      firstname: "Saisir votre prénom"
+      lastname: "Saisir votre nom"
+      email: "Saisir votre email"
 
 # --- Application ---
 "Please log in": "Veuillez vous connecter"
