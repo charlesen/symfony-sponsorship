@@ -74,6 +74,9 @@ class AssignmentEmail
     #[LiveAction]
     public function sendInvitations(): void
     {
+        // Validation des données
+        $this->validate();
+
         foreach ($this->contacts as $contact) {
             $email = (new Email())
                 ->from('no-reply@tonsite.com')

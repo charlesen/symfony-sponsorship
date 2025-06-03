@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
+
 /* Custom styles */
 
 /* Icon Picker Styles */
