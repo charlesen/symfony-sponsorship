@@ -1,11 +1,11 @@
 framework:
-    mailer:
-        # Activer le mode debug pour plus de détails
-        dsn: '%env(MAILER_DSN)%'
-        
-        # Activer le transport nul pour désactiver l'envoi d'emails en développement
-        # dsn: 'null://null'
-        
-        # Configurer l'expéditeur par défaut
-        envelope:
-            sender: 'noreply@example.com'
+  mailer:
+    # Activer le mode debug pour plus de détails
+    dsn: "%env(MAILER_DSN)%"
+
+    # Activer le transport nul pour désactiver l'envoi d'emails en développement
+    # dsn: 'null://null'
+
+    # Configurer l'expéditeur par défaut
+    envelope:
+      sender: "noreply@email.edounze.com"

@@ -33,6 +33,8 @@ class CustomLoginLinkNotification extends LoginLinkNotification
             'subject' => $this->subject,
         ];
 
+        $email->from('charles@edounze.com');
+
         $email->htmlTemplate('security/emails/custom_login_link_email.html.twig')
             ->context($context);
 
