@@ -50,6 +50,24 @@ class AssignmentEmail
     }
 
     /**
+     * Supprime un bloc de saisie pour un contact.
+     * Cette méthode est appelée lors du clic sur le bouton "Supprimer".
+     */
+    #[LiveAction]
+    public function removeContact(array $data): void
+    {
+        $index = $data['index'] ?? null;
+        if (null !== $index && isset($this->contacts[$index])) {
+            unset($this->contacts[$index]);
+            $this->contacts = array_values($this->contacts);
+        }
+
+        if (empty($this->contacts)) {
+            $this->addContact();
+        }
+    }
+
+    /**
      * Envoie des invitations par e-mail à tous les contacts.
      * Cette méthode est appelée lors du clic sur le bouton "Envoyer les invitations".
      */
