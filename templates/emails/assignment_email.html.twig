@@ -1,0 +1,11 @@
+{% extends 'base_email.html.twig' %}
+
+{% block subject %}{{ 'AssignmentEmail.email.subject'|trans }}{% endblock %}
+
+{% block title %}{{ 'AssignmentEmail.email.subject'|trans }}{% endblock %}
+
+{% block body_html %}
+    <p>{{ 'AssignmentEmail.email.body'|trans({'%firstName%': firstName, '%userFirstName%': app.user.firstName})|raw }}</p>
+    <a href="{{ url }}" class="button">{{ 'AssignmentEmail.email.button'|trans }}</a>
+{% endblock %}
+    

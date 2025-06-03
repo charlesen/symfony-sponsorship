@@ -2,24 +2,35 @@
 
 namespace App\Twig\Components;
 
+use App\Service\Brevo;
+use App\Service\Mailer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\UX\LiveComponent\ValidatableComponentTrait;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Composant Symfony UX Live Component pour gérer l'envoi d'invitations par e-mail.
  * Permet à un utilisateur d'ajouter plusieurs contacts et d'envoyer des invitations par e-mail.
  */
 #[AsLiveComponent('AssignmentEmail')]
-class AssignmentEmail
+class AssignmentEmail extends AbstractController
 {
     use DefaultActionTrait;
+
+    use ValidatableComponentTrait;
+
+    public function __construct(
+        private Mailer $mailer,
+        private Brevo $brevo,
+        private TranslatorInterface $translator,
+        private UrlGeneratorInterface $urlGenerator
+    ) {}
 
     /**
      * Liste des contacts invités.
@@ -28,16 +39,20 @@ class AssignmentEmail
      * @var array
      */
     #[LiveProp(writable: true)]
-    #[Assert\All([
-        new NotBlank(message: 'Le prénom est requis.'),
-        new EmailConstraint(message: 'L\'adresse e-mail n\'est pas valide.')
-    ])]
+    #[Assert\All(
+        new Assert\Collection(
+            fields: [
+                'firstName' => new Assert\NotBlank(message: 'Le prénom est requis.'),
+                'email'     => [
+                    new Assert\NotBlank(message: 'L\'adresse e-mail est requise.'),
+                    new Assert\Email(message: 'L\'adresse e-mail "{{ value }}" n’est pas valide.'),
+                ],
+            ],
+            allowMissingFields: true,
+            allowExtraFields: true
+        )
+    )]
     public array $contacts = [['firstName' => '', 'email' => '']];
-
-    /**
-     * Constructeur du composant.
-     */
-    public function __construct(private MailerInterface $mailer) {}
 
     /**
      * Ajoute un nouveau bloc de saisie pour un contact.
@@ -72,19 +87,34 @@ class AssignmentEmail
      * Cette méthode est appelée lors du clic sur le bouton "Envoyer les invitations".
      */
     #[LiveAction]
-    public function sendInvitations(): void
+    public function sendInvitations()
     {
         // Validation des données
         $this->validate();
-
         foreach ($this->contacts as $contact) {
-            $email = (new Email())
-                ->from('no-reply@tonsite.com')
-                ->to($contact['email'])
-                ->subject('Rejoins notre communauté et gagne des goodies !')
-                ->html('<p>Bonjour ' . $contact['firstName'] . ',</p><p>Nous t\'invitons à rejoindre notre communauté pour gagner des goodies en partageant notre livre. Inscris-toi dès maintenant !</p>');
 
-            $this->mailer->send($email);
+            // Send email based on template            
+            $this->mailer->sendEmail(
+                $contact['email'],
+                $this->translator->trans('AssignmentEmail.email.subject'),
+                [
+                    'firstName' => $contact['firstName'],
+                    'url' => $this->urlGenerator->generate('register', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                ],
+                'emails/assignment_email.html.twig'
+            );
+
+            // Add contact to Brevo
+            $this->brevo->addContact(
+                $contact['email'],
+                [
+                    'firstName' => $contact['firstName'],
+                ]
+            );
         }
+
+        $this->addFlash('success', $this->translator->trans('AssignmentEmail.email.success'));
+
+        return $this->redirectToRoute('dashboard_index');
     }
 }

@@ -169,6 +169,11 @@ about:
 "AssignmentEmail":
   description: "Envoyez des invitations par e-mail à vos contacts pour augmenter vos chances de remporter un livre gratuit."
   title: "Envoyer des invitations"
+  email:
+    subject: "L'un de vos amis aimerait vous faire gagner un livre"
+    body: "Bonjour %firstName%, <p>Un de vos amis (%userFirstName%) aimerait vous faire gagner un livre.</p><p>Il vous suffit de cliquer sur le lien ci-dessous pour accepter son invitation.</p>"
+    button: "Accepter l'invitation"
+    success: "Invitations envoyées avec succès"
 
 Delete contact: "Supprimer le contact"
 Add contact: "Ajouter un contact"

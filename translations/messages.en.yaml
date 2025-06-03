@@ -23,3 +23,8 @@
 "AssignmentEmail":
   description: "Send invitations to your contacts by email to increase your chances of winning a free book."
   title: "Send invitations"
+  email:
+    subject: "One of your friends wants to give you a free book"
+    body: "Hello %firstName %, <p>One of your friends wants to give you a free book.</p><p>You just need to click on the link below to accept his invitation.</p>"
+    button: "Accept invitation"
+  success: "Invitations sent successfully"
