@@ -8,11 +8,10 @@ on:
 
 jobs:
   tests:
-    name: Run tests
+    name: Run tests on MySQL
     runs-on: ubuntu-latest
 
     services:
-      # Service MySQL pour les tests
       mysql:
         image: mysql:8.0
         env:
@@ -20,53 +19,48 @@ jobs:
           MYSQL_DATABASE: symfony_sponsorship_test
           MYSQL_USER: test_user
           MYSQL_PASSWORD: test_password
-        ports:
-          - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping"
+          --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
 
-      # Service Redis pour les tests
       redis:
         image: redis:alpine
-        ports:
-          - 6379:6379
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
-        env:
-          REDIS_PASSWORD: test_password
-        # Configuration du mot de passe via la commande d'entrée
-        entrypoint:
-          ["sh", "-c", "redis-server --requirepass $${REDIS_PASSWORD}"]
 
-      # Service Mailpit pour les tests
       mailpit:
         image: axllent/mailpit:latest
         ports:
-          - 1025:1025 # SMTP
-          - 8025:8025 # Web UI
+          - 1025:1025
+          - 8025:8025
+
+    strategy:
+      matrix:
+        php: ["8.2", "8.3"]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup PHP
+      - name: Setup PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "8.2"
+          php-version: ${{ matrix.php }}
           coverage: none
           tools: composer:v2
           extensions: intl, pdo_mysql, zip, gd, exif, pcntl, bcmath, opcache, redis
 
-      - name: Get Composer cache directory
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Get Composer cache dir
         id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache Composer packages
         uses: actions/cache@v3
@@ -78,23 +72,31 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --prefer-dist --no-progress --no-scripts
-          composer run-script post-install-cmd --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
 
       - name: Set up environment
         run: |
           cp .env.test .env
-          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/symfony_sponsorship_test?serverVersion=8.0.32&charset=utf8mb4" >> .env
+          echo "DATABASE_URL=mysql://test_user:test_password@127.0.0.1:3306/symfony_sponsorship_test?serverVersion=8.0&charset=utf8mb4" >> .env
           echo "MAILER_DSN=smtp://localhost:1025" >> .env
-          echo "REDIS_DSN=redis://:test_password@127.0.0.1:6379" >> .env
-          echo "MESSENGER_TRANSPORT_DSN=redis://:test_password@127.0.0.1:6379/messages" >> .env
+          echo "REDIS_DSN=redis://127.0.0.1:6379" >> .env
+          echo "MESSENGER_TRANSPORT_DSN=redis://127.0.0.1:6379/messages" >> .env
 
-      - name: Create database schema
+      - name: Create & migrate database
         run: |
           php bin/console doctrine:database:create --if-not-exists --env=test
-          php bin/console doctrine:schema:create --env=test
+          php bin/console doctrine:migrations:migrate --no-interaction --env=test
 
-      - name: Run PHPUnit tests
+      - name: Lint YAML
+        run: php bin/console lint:yaml config/
+
+      - name: Lint Twig
+        run: php bin/console lint:twig templates/
+
+      - name: Lint Container
+        run: php bin/console lint:container
+
+      - name: Run PHPUnit
         run: php bin/phpunit --coverage-clover=coverage.xml
 
       - name: Upload coverage to Codecov
@@ -104,14 +106,14 @@ jobs:
           file: coverage.xml
           fail_ci_if_error: false
 
-      - name: Lint Twig templates
-        run: php bin/console lint:twig templates/
+      - name: Static analysis (PHPStan)
+        run: vendor/bin/phpstan analyse -l max src
 
-      - name: Lint YAML files
-        run: php bin/console lint:yaml config/
+      - name: CS Fixer (dry-run)
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
-      - name: Lint container
-        run: php bin/console lint:container
-
-      - name: Security check
-        run: composer require --dev symfony/security-checker && vendor/bin/security-checker security:check composer.lock
+      - name: Security check (Roave Security Advisories)
+        run: |
+          composer require --dev roave/security-advisories:^1.0 --no-update
+          composer update --lock
+          # Si ce job échoue, c'est qu'une vulnérabilité est détectée dans composer.lock.
