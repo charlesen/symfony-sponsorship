@@ -18,3 +18,8 @@
       firstname: "Type your first name"
       lastname: "Type your last name"
       email: "Type your email"
+
+# Assignment Email
+"AssignmentEmail":
+  description: "Send invitations to your contacts by email to increase your chances of winning a free book."
+  title: "Send invitations"

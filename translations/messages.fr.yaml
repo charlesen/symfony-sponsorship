@@ -164,3 +164,11 @@ about:
     general: "Une erreur est survenue"
   success: "Opération réussie"
   access_denied: "Accès refusé. Vous n'avez pas les droits nécessaires pour effectuer cette action."
+
+# Assignment Email
+"AssignmentEmail":
+  description: "Envoyez des invitations par e-mail à vos contacts pour augmenter vos chances de remporter un livre gratuit."
+  title: "Envoyer des invitations"
+
+Delete contact: "Supprimer le contact"
+Add contact: "Ajouter un contact"
