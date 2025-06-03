@@ -8,4 +8,4 @@ framework:
 
     # Configurer l'expéditeur par défaut
     envelope:
-      sender: "noreply@email.edounze.com"
+      sender: "charles@edounze.com"
