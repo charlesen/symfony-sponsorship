@@ -1,16 +1,16 @@
 # Configuration spécifique aux tests
 framework:
-    test: true
-    session:
-        storage_id: session.storage.mock_file
-    profiler:
-        enabled: true
-        collect: false
-    router:
-        resource: ../../config/routes.yaml
-        strict_requirements: false
+  test: true
+  session:
+    storage_factory_id: session.storage.mock_file
+  profiler:
+    enabled: true
+    collect: false
+  router:
+    resource: ../../config/routes.yaml
+    strict_requirements: false
 
 # Désactive la vérification des tokens CSRF en environnement de test
 security:
-    csrf_protection:
-        enabled: false
+  csrf_protection:
+    enabled: false
