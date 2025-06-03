@@ -1,14 +1,17 @@
 framework:
   messenger:
-    # Disable failure transport for now
-    # failure_transport: failed
+    # Enable failure transport for async messages
+    failure_transport: failed
 
     transports:
-      # Use sync transport for simplicity
+      # Sync transport for messages that must be handled immediately
       sync: "sync://"
-      # failed: 'doctrine://default?queue_name=failed'
 
+      # Async transport for background processing
       async: "%env(MESSENGER_TRANSPORT_DSN)%"
+
+      # Failed messages transport
+      failed: "doctrine://default?queue_name=failed"
 
     default_bus: messenger.bus.default
 
@@ -17,5 +20,7 @@ framework:
         default_middleware: allow_no_handlers
 
     routing:
-      # Route all messages to sync transport
-      "*": sync
+      # Route all messages to async transport by default
+      # You can specify specific message classes to route to sync if needed
+      # Example: 'App\Message\UrgentMessage': sync
+      "*": async
