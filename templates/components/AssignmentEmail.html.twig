@@ -1,0 +1,29 @@
+<div {{ attributes }}>
+    <div class="space-y-4">
+    <form data-model="contacts" class="space-y-4">
+        {% for contact in contacts %}
+            <div class="space-y-2">
+                <div class="join join-vertical w-full">
+                    <div class="join-item w-full">
+                        <label for="firstName" class="label">
+                            <span class="label-text">Prénom</span>
+                        </label>
+                        <input type="text" id="firstName" name="firstName" placeholder="Prénom" value="{{ contact.firstName }}" class="input input-bordered input-primary w-full" />
+                    </div>
+                    <div class="join-item w-full">
+                        <label for="email" class="label">
+                            <span class="label-text">E-mail</span>
+                        </label>
+                        <input type="email" id="email" name="email" placeholder="E-mail" value="{{ contact.email }}" class="input input-bordered input-primary w-full" />
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="flex justify-between">
+            <button type="button" data-action="live#action" data-live-action-param="addContact" class="btn btn-outline btn-primary">Ajouter un contact</button>
+            <button type="submit" data-action="live#action" data-live-action-param="sendInvitations" class="btn btn-outline btn-accent">Envoyer les invitations</button>
+        </div>
+    </form>
+</div>
+
+</div>
