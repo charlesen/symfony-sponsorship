@@ -10,7 +10,5 @@ framework:
     resource: ../../config/routes.yaml
     strict_requirements: false
 
-# Désactive la vérification des tokens CSRF en environnement de test
-security:
-  csrf_protection:
-    enabled: false
+  # Désactive la vérification des tokens CSRF en environnement de test
+  csrf_protection: false
