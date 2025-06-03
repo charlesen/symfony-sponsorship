@@ -2899,3 +2899,27 @@
 2025/05/30 11:20:28 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
 2025/05/30 11:20:52 [error] 23#23: *267 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
 2025/05/30 11:21:48 [error] 23#23: *316 access forbidden by rule, client: 172.19.0.1, server: localhost, request: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1", host: "localhost:8080"
+2025/06/03 08:10:25 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:10:31 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:10:37 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:10:44 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:10:50 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:10:56 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:11:03 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:11:13 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:11:30 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:11:59 [emerg] 1#1: host not found in upstream "php:9000" in /etc/nginx/nginx.conf:25
+2025/06/03 08:12:54 [notice] 1#1: using the "epoll" event method
+2025/06/03 08:12:54 [notice] 1#1: nginx/1.27.5
+2025/06/03 08:12:54 [notice] 1#1: built by gcc 14.2.0 (Alpine 14.2.0) 
+2025/06/03 08:12:54 [notice] 1#1: OS: Linux 6.6.87.1-microsoft-standard-WSL2
+2025/06/03 08:12:54 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2025/06/03 08:12:54 [notice] 1#1: start worker processes
+2025/06/03 08:12:54 [notice] 1#1: start worker process 20
+2025/06/03 08:12:54 [notice] 1#1: start worker process 21
+2025/06/03 08:12:54 [notice] 1#1: start worker process 22
+2025/06/03 08:12:54 [notice] 1#1: start worker process 23
+2025/06/03 08:12:54 [notice] 1#1: start worker process 24
+2025/06/03 08:12:54 [notice] 1#1: start worker process 25
+2025/06/03 08:12:54 [notice] 1#1: start worker process 26
+2025/06/03 08:12:54 [notice] 1#1: start worker process 27
