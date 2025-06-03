@@ -1,4 +1,6 @@
 {
+    "name": "charlesen/symfony-sponsorship",
+    "description": "Sponsorship app with Symfony",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
