@@ -1,20 +1,21 @@
 framework:
-    messenger:
-        # Disable failure transport for now
-        # failure_transport: failed
+  messenger:
+    # Disable failure transport for now
+    # failure_transport: failed
 
-        transports:
-            # Use sync transport for simplicity
-            sync: 'sync://'
-            # failed: 'doctrine://default?queue_name=failed'
+    transports:
+      # Use sync transport for simplicity
+      sync: "sync://"
+      # failed: 'doctrine://default?queue_name=failed'
 
+      async: "%env(MESSENGER_TRANSPORT_DSN)%"
 
-        default_bus: messenger.bus.default
+    default_bus: messenger.bus.default
 
-        buses:
-            messenger.bus.default:
-                default_middleware: allow_no_handlers
+    buses:
+      messenger.bus.default:
+        default_middleware: allow_no_handlers
 
-        routing:
-            # Route all messages to sync transport
-            '*': sync
+    routing:
+      # Route all messages to sync transport
+      "*": sync
