@@ -1,76 +1,62 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = []
-  static values = {}
+  static targets = ["errorContainer"]
+  static values = {
+    targetComponent: String
+  }
 
   connect() {
     console.log('Contact Picker Controller connected')
   }
 
   async pickContacts() {
-    // Check if the Contact Picker API is available
     if (!('contacts' in navigator && 'ContactsManager' in window)) {
       this.showError("L'API Contact Picker n'est pas disponible sur ce navigateur.")
       return
     }
 
     try {
-      // Check if the browser supports the required properties
       const supportedProperties = await navigator.contacts.getProperties()
       const requiredProperties = ['name', 'email']
-      const hasRequiredProperties = requiredProperties.every(prop => 
-        supportedProperties.includes(prop)
-      )
+      const hasRequiredProperties = requiredProperties.every(prop => supportedProperties.includes(prop))
 
       if (!hasRequiredProperties) {
-        throw new Error('Required contact properties not supported')
+        throw new Error('Les propriétés nécessaires ne sont pas supportées')
       }
 
-      // Open the contact picker
       const contacts = await navigator.contacts.select(['name', 'email'], { multiple: true })
 
-      if (!contacts || contacts.length === 0) {
-        return // User cancelled the contact picker
-      }
+      if (!contacts || contacts.length === 0) return
 
-      // Format contacts for the LiveComponent
       const formattedContacts = contacts
-        .filter(contact => {
-          // Only include contacts with at least an email
-          const hasEmail = contact.email && contact.email.length > 0
-          if (!hasEmail) {
-            console.warn('Contact skipped: No email address found')
-          }
-          return hasEmail
-        })
-        .map(contact => ({
-          firstName: this.getBestName(contact.name) || '',
-          email: contact.email[0] // We already filtered out empty emails
+        .filter(c => c.email?.length)
+        .map(c => ({
+          firstName: this.getBestName(c.name),
+          email: c.email[0]
         }))
 
       if (formattedContacts.length === 0) {
-        this.showError('Aucun contact avec une adresse email valide trouvé.')
+        this.showError('Aucun contact valide avec e-mail.')
         return
       }
 
-      // Dispatch event to update the LiveComponent
-      this.dispatch('contacts-selected', { 
+      this.dispatch('contacts-selected', {
         detail: { contacts: formattedContacts },
         prefix: 'contact-picker'
       })
 
+      this.showInfo(`${formattedContacts.length} contact(s) ajouté(s).`)
+
     } catch (error) {
-      console.error('Error selecting contacts:', error)
-      this.showError("Impossible d'accéder aux contacts. Vérifiez les permissions de votre navigateur.")
+      console.error('Erreur Contact Picker :', error)
+      this.showError("Impossible d'accéder aux contacts. Vérifiez les permissions du navigateur.")
     }
   }
 
   handleContacts(event) {
-    // This method will be called when the contacts-selected event is triggered
     const { contacts } = event.detail
-    
-    // Dispatch the event to update the LiveComponent
+
     this.dispatch('addContacts', {
       detail: { contacts },
       prefix: 'live',
@@ -80,19 +66,24 @@ export default class extends Controller {
 
   getBestName(names) {
     if (!names || names.length === 0) return ''
-    
-    // Return the first non-empty name
     return names.find(name => name && name.trim() !== '') || ''
   }
 
   showError(message) {
-    // Dispatch an error event that can be handled by the LiveComponent
-    this.dispatch('error', { 
-      detail: { message },
-      prefix: 'contact-picker'
-    })
-    
-    // Also show a browser alert as fallback
-    alert(message)
+    this.renderMessage(message, 'bg-red-100 text-red-800')
+  }
+
+  showInfo(message) {
+    this.renderMessage(message, 'bg-green-100 text-green-800')
+  }
+
+  renderMessage(message, classes) {
+    if (!this.hasErrorContainerTarget) return alert(message)
+
+    const el = this.errorContainerTarget
+    el.textContent = message
+    el.className = `mt-2 p-2 rounded ${classes}`
+    el.classList.remove('hidden')
+    setTimeout(() => el.classList.add('hidden'), 5000)
   }
 }

@@ -16,15 +16,10 @@ use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 
-/**
- * Composant Symfony UX Live Component pour gérer l'envoi d'invitations par e-mail.
- * Permet à un utilisateur d'ajouter plusieurs contacts et d'envoyer des invitations par e-mail.
- */
 #[AsLiveComponent('AssignmentEmail')]
 class AssignmentEmail extends AbstractController
 {
     use DefaultActionTrait;
-
     use ValidatableComponentTrait;
 
     public function __construct(
@@ -34,12 +29,6 @@ class AssignmentEmail extends AbstractController
         private UrlGeneratorInterface $urlGenerator
     ) {}
 
-    /**
-     * Liste des contacts invités.
-     * Chaque contact est un tableau associatif contenant 'firstName' et 'email'.
-     *
-     * @var array
-     */
     #[LiveProp(writable: true)]
     #[Assert\All(
         new Assert\Collection(
@@ -56,47 +45,31 @@ class AssignmentEmail extends AbstractController
     )]
     public array $contacts = [['firstName' => '', 'email' => '']];
 
-    /**
-     * Ajoute un nouveau bloc de saisie pour un contact.
-     * Cette méthode est appelée lors du clic sur le bouton "Ajouter un contact".
-     */
     #[LiveAction]
     public function addContact(): void
     {
         $this->contacts[] = ['firstName' => '', 'email' => ''];
     }
 
-    /**
-     * Supprime un bloc de saisie pour un contact.
-     * Cette méthode est appelée lors du clic sur le bouton "Supprimer".
-     */
     #[LiveAction]
     public function removeContact(#[LiveArg] int $index): void
     {
         if (isset($this->contacts[$index])) {
             unset($this->contacts[$index]);
-            // Réindexe le tableau pour éviter les trous
             $this->contacts = array_values($this->contacts);
 
-            // Si c'était le dernier contact, on en ajoute un nouveau vide
             if (empty($this->contacts)) {
                 $this->addContact();
             }
         }
     }
 
-    /**
-     * Met à jour la liste des contacts.
-     * Cette méthode est appelée lors de la sélection des contacts via l'API Contact Picker.
-     */
     #[LiveAction]
     public function updateContacts(#[LiveArg] array $contacts): void
     {
-        // Filtrage minimal
         $this->contacts = array_filter(
             $contacts,
-            fn($c) =>
-            isset($c['email']) && filter_var($c['email'], FILTER_VALIDATE_EMAIL)
+            fn($c) => isset($c['email']) && filter_var($c['email'], FILTER_VALIDATE_EMAIL)
         );
 
         if (empty($this->contacts)) {
@@ -104,16 +77,10 @@ class AssignmentEmail extends AbstractController
         }
     }
 
-
-    /**
-     * Ajoute des contacts à partir du sélecteur de contacts du navigateur.
-     * Cette méthode est appelée lorsqu'un utilisateur sélectionne des contacts via l'API Contact Picker.
-     */
     #[LiveAction]
     public function addContacts(array $contacts): void
     {
         foreach ($contacts as $contact) {
-            // Vérifier si le contact existe déjà dans la liste
             $contactExists = false;
             foreach ($this->contacts as $existingContact) {
                 if (strtolower($existingContact['email']) === strtolower($contact['email'])) {
@@ -121,8 +88,7 @@ class AssignmentEmail extends AbstractController
                     break;
                 }
             }
-            
-            // Ajouter le contact s'il n'existe pas déjà
+
             if (!$contactExists) {
                 $this->contacts[] = [
                     'firstName' => $contact['firstName'],
@@ -130,39 +96,36 @@ class AssignmentEmail extends AbstractController
                 ];
             }
         }
-        
-        // S'assurer qu'il y a toujours au moins un champ de contact vide
+
         if (empty($this->contacts)) {
             $this->addContact();
         }
     }
 
-    /**
-     * Envoie des invitations par e-mail à tous les contacts.
-     * Cette méthode est appelée lors du clic sur le bouton "Envoyer les invitations".
-     */
     #[LiveAction]
     public function sendInvitations()
     {
-        // Validation des données
         $this->validate();
-        
-        // Filtrer les contacts vides
-        $validContacts = array_filter($this->contacts, function($contact) {
-            return !empty($contact['email']) && !empty($contact['firstName']);
-        });
-        
+
+        $validContacts = array_filter($this->contacts, fn($c) => !empty($c['email']) && !empty($c['firstName']));
+
         if (empty($validContacts)) {
             $this->addFlash('error', $this->translator->trans('Aucun contact valide à inviter.'));
             return;
         }
-        
+
+        $seenEmails = [];
         $successCount = 0;
         $errorCount = 0;
-        
+
         foreach ($validContacts as $contact) {
+            $email = strtolower($contact['email']);
+            if (in_array($email, $seenEmails, true)) {
+                continue;
+            }
+            $seenEmails[] = $email;
+
             try {
-                // Send email based on template
                 $this->mailer->sendEmail(
                     $contact['email'],
                     $this->translator->trans('AssignmentEmail.email.subject'),
@@ -172,34 +135,22 @@ class AssignmentEmail extends AbstractController
                     ],
                     'emails/assignment_email.html.twig'
                 );
-                
-                // Add contact to Brevo
+
                 $this->brevo->addContact(
                     $contact['email'],
                     [
                         'firstName' => $contact['firstName'],
                     ]
                 );
-                
+
                 $successCount++;
-                
             } catch (\Exception $e) {
                 $errorCount++;
-                // Log the error but continue with other contacts
                 error_log(sprintf('Error sending invitation to %s: %s', $contact['email'], $e->getMessage()));
             }
-
-            // Add contact to Brevo
-            $this->brevo->addContact(
-                $contact['email'],
-                [
-                    'firstName' => $contact['firstName'],
-                ]
-            );
         }
 
         $this->addFlash('success', $this->translator->trans('AssignmentEmail.email.success'));
-
         return $this->redirectToRoute('dashboard_index');
     }
 }

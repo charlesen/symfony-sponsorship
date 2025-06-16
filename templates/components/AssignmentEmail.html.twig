@@ -1,3 +1,4 @@
+{# templates/components/assignment_email.html.twig #}
 <div {{ attributes }}>
     <div class="space-y-6 max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100">
@@ -7,6 +8,9 @@
             {{ 'AssignmentEmail.description'|trans }}
         </p>
 
+        {# Zone d'affichage des erreurs ou messages temporaires #}
+        <div data-contact-picker-target="errorContainer" class="hidden text-sm text-center"></div>
+
         <form
             data-model="contacts"
             data-action="submit->live#action:prevent"
@@ -14,86 +18,72 @@
             class="space-y-6"
         >
             <div class="space-y-4">
-
                 {% for contact in contacts %}
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
-                        <div class="space-y-4">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {# ---- Champ "Prénom" ---- #}
-                                <div class="form-control">
-                                    <label for="firstName-{{ loop.index }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                        {{ 'Prénom' }}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="firstName-{{ loop.index }}"
-                                        data-model="contacts[{{ loop.index0 }}].firstName"
-                                        value="{{ contact.firstName }}"
-                                        class="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 shadow-sm 
-                                               focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
-                                               dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-indigo-400 
-                                               dark:focus:border-indigo-400"
-                                        
-                                    >
-                                    {% if _errors.has('contacts[' ~ loop.index0 ~ '][firstName]') %}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="form-control">
+                                <label for="firstName-{{ loop.index }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    {{ 'Prénom' }}
+                                </label>
+                                <input
+                                    type="text"
+                                    id="firstName-{{ loop.index }}"
+                                    data-model="contacts[{{ loop.index0 }}].firstName"
+                                    value="{{ contact.firstName }}"
+                                    class="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 shadow-sm 
+                                           focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
+                                           dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-indigo-400 
+                                           dark:focus:border-indigo-400"
+                                >
+                                {% if _errors.has('contacts[' ~ loop.index0 ~ '][firstName]') %}
                                     <div role="alert" class="alert alert-warning flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-  </svg>
                                         {{ _errors.get('contacts[' ~ loop.index0 ~ '][firstName]') }}
                                     </div>
-                                    {% endif %}
-                                </div>
-
-                                {# ---- Champ "Adresse email" ---- #}
-                                <div class="form-control">                                    
-                                    <label for="email-{{ loop.index }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                        {{ 'Adresse email' }}
-                                    </label>
-                                    <input
-                                        type="email"
-                                        id="email-{{ loop.index }}"
-                                        data-model="contacts[{{ loop.index0 }}].email"
-                                        value="{{ contact.email }}"
-                                        class="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 shadow-sm 
-                                               focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
-                                               dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-indigo-400 
-                                               dark:focus:border-indigo-400"
-                                        
-                                    >
-                                    {% if _errors.has('contacts[' ~ loop.index0 ~ '][email]') %}
-                                    <div role="alert" class="alert alert-warning flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                        </svg>
-                                        {{ _errors.get('contacts[' ~ loop.index0 ~ '][email]') }}
-                                    </div>
-                                    {% endif %}
-                                </div>
+                                {% endif %}
                             </div>
 
-                            {# ---- Bouton "Supprimer ce contact" ---- #}
-                            {% if contacts|length > 1 %}
-                                <button
-                                    type="button"
-                                    data-action="live#action"
-                                    data-live-action-param="removeContact"
-                                    data-live-index-param="{{ loop.index0 }}"
-                                    class="mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md 
-                                           text-white btn btn-neutral"
+                            <div class="form-control">
+                                <label for="email-{{ loop.index }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    {{ 'Adresse email' }}
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email-{{ loop.index }}"
+                                    data-model="contacts[{{ loop.index0 }}].email"
+                                    value="{{ contact.email }}"
+                                    class="mt-1 block w-full rounded-md border border-gray-300 bg-white text-gray-900 shadow-sm 
+                                           focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
+                                           dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-indigo-400 
+                                           dark:focus:border-indigo-400"
                                 >
-                                    {{ 'Delete contact'|trans }}
-                                </button>
-                            {% endif %}
+                                {% if _errors.has('contacts[' ~ loop.index0 ~ '][email]') %}
+                                    <div role="alert" class="alert alert-warning flex items-center">
+                                        {{ _errors.get('contacts[' ~ loop.index0 ~ '][email]') }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
+
+                        {% if contacts|length > 1 %}
+                            <button
+                                type="button"
+                                data-action="live#action"
+                                data-live-action-param="removeContact"
+                                data-live-index-param="{{ loop.index0 }}"
+                                class="mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md 
+                                       text-white btn btn-neutral"
+                            >
+                                {{ 'Delete contact'|trans }}
+                            </button>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
 
-            {# ---- Boutons d'action ---- #}
             <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6"
                  data-controller="contact-picker"
                  data-action="contacts-selected@window->contact-picker#handleContacts">
+
                 <div class="flex flex-wrap gap-2">
                     <button
                         type="button"
@@ -101,9 +91,6 @@
                         class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md 
                                text-white btn btn-primary"
                         title="{{ 'Select from your device contacts'|trans }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
                         {{ 'Select from contacts'|trans }}
                     </button>
                     <button
@@ -112,16 +99,12 @@
                         data-live-action-param="addContact"
                         class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md 
                                text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
                         {{ 'Add contact'|trans }}
                     </button>
                 </div>
             </div>
             <hr>
             <div class="flex justify-center mt-6">
-                {# Le bouton "Send invitations" peut rester un bouton de type submit, inutile d’ajouter data-action ici #}
                 <button
                     type="submit"
                     class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md 
