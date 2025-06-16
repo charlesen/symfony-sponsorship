@@ -13,12 +13,6 @@ framework:
       # Failed messages transport
       failed: "doctrine://default?queue_name=failed"
 
-    default_bus: messenger.bus.default
-
-    buses:
-      messenger.bus.default:
-        default_middleware: allow_no_handlers
-
     routing:
       # Route all messages to async transport by default
       # You can specify specific message classes to route to sync if needed

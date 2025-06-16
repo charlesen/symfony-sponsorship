@@ -13,6 +13,7 @@
 /docker/mysql/data/
 /docker/redis/data/
 /docker/mailpit/data/
+docker/nginx/logs
 ###< Docker ###
 
 ###> phpunit/phpunit ###
