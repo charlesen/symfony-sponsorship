@@ -12,6 +12,7 @@ use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use App\Notifier\CustomLoginLinkNotification;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/{_locale}')]
@@ -67,7 +68,7 @@ final class SecurityController extends AbstractController
                 // Si on arrive ici, l'envoi a réussi
                 $this->addFlash('success', $translator->trans('Login link sent ! Please check your email'));
                 return $this->redirectToRoute('login');
-            } catch (\Exception $e) {
+            } catch (TransportExceptionInterface $e) {
                 // En cas d'erreur, on log l'erreur et on affiche un message à l'utilisateur
                 $this->addFlash('error', $translator->trans('Login link could not be sent!'));
                 // On peut logger l'erreur pour le débogage
@@ -76,8 +77,8 @@ final class SecurityController extends AbstractController
                     'error' => $e->getMessage(),
                     'exception' => $e
                 ]);
-                // On reste sur la page de login pour qu'il puisse réessayer
-                return $this->render('security/login.html.twig');
+
+                return $this->redirectToRoute('login');
             }
         }
 
