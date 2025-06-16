@@ -4,6 +4,10 @@ export default class extends Controller {
   static targets = []
   static values = {}
 
+  connect() {
+    console.log('Contact Picker Controller connected')
+  }
+
   async pickContacts() {
     // Check if the Contact Picker API is available
     if (!('contacts' in navigator && 'ContactsManager' in window)) {
@@ -51,7 +55,7 @@ export default class extends Controller {
       }
 
       // Dispatch event to update the LiveComponent
-      this.dispatch('contactsSelected', { 
+      this.dispatch('contacts-selected', { 
         detail: { contacts: formattedContacts },
         prefix: 'contact-picker'
       })
