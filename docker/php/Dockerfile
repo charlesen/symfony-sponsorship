@@ -1,9 +1,13 @@
 FROM php:8.2-fpm
 
-# Mise à jour et installation des dépendances système
+# Set timezone
+ENV TZ=Europe/Paris
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    curl \
     libzip-dev \
     libicu-dev \
     libpng-dev \
@@ -14,84 +18,60 @@ RUN apt-get update && apt-get install -y \
     libxslt1-dev \
     libpq-dev \
     zip \
-    unzip \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
-# Configuration du timezone
-ENV TZ=Europe/Paris
+# Configure timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Installation des extensions PHP
-RUN apt-get update && apt-get install -y libzip-dev \
-    && docker-php-ext-configure zip \
-    && docker-php-ext-install -j$(nproc) zip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli intl xsl bcmath soap sockets opcache pcntl zip
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        bcmath \
+        gd \
+        intl \
+        mysqli \
+        opcache \
+        pcntl \
+        pdo \
+        pdo_mysql \
+        soap \
+        sockets \
+        xsl \
+        zip \
+    && docker-php-ext-configure zip
 
-# Installation de Redis et autres extensions PECL
+# Install PECL extensions
 RUN pecl install redis && docker-php-ext-enable redis
 
-# Activation des extensions
-RUN docker-php-ext-enable opcache pdo_mysql redis pcntl
-
-# Installation des outils système supplémentaires
-RUN apt-get update && apt-get install -y \
-    procps \
-    && rm -rf /var/lib/apt/lists/*
-
-# Installation de Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Installation de symfony/redis-messenger
-RUN composer require symfony/redis-messenger --no-scripts --no-interaction
-
-# Installation de Node.js
+# Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn
 
-# Configuration PHP
-RUN { \
-    echo 'memory_limit = 512M'; \
-    echo 'upload_max_filesize = 100M'; \
-    echo 'post_max_size = 108M'; \
-    echo 'max_execution_time = 300'; \
-    echo 'max_input_time = 300'; \
-    echo 'date.timezone = Europe/Paris'; \
-    echo 'disable_functions = '; \
-    echo 'allow_url_fopen = On'; \
-    echo 'allow_url_include = Off'; \
-    echo 'zend_extension=opcache'; \
-    echo 'opcache.enable=1'; \
-    echo 'opcache.enable_cli=1'; \
-    echo 'opcache.jit=1255'; \
-    echo 'opcache.jit_buffer_size=256M'; \
-    echo 'opcache.memory_consumption=256'; \
-    echo 'opcache.validate_timestamps=0'; \
-    echo 'opcache.save_comments=1'; \
-    echo 'opcache.fast_shutdown=1'; \
-    echo 'opcache.interned_strings_buffer=16'; \
-    echo 'opcache.max_accelerated_files=10000'; \
-} > /usr/local/etc/php/conf.d/custom.ini
+# Copy PHP configuration
+COPY docker/php/conf.d/ /usr/local/etc/php/conf.d/
 
-# Enable proc_open and other required functions
-RUN { \
-    echo 'disable_functions = '; \
-    echo 'allow_url_fopen = On'; \
-    echo 'allow_url_include = Off'; \
-} > /usr/local/etc/php/conf.d/proc.ini
-
-# Suppression du fichier opcache.ini existant pour éviter les doublons
+# Remove duplicate opcache.ini to avoid conflicts
 RUN rm -f /usr/local/etc/php/conf.d/opcache.ini
 
-# Configuration des permissions
-RUN usermod -u 1000 www-data && groupmod -g 1000 www-data \
-    && mkdir -p /var/www/.composer \
+# Set working directory and permissions
+WORKDIR /var/www
+RUN mkdir -p /var/www/.composer \
     && chown -R www-data:www-data /var/www
 
-# Définition du répertoire de travail
-WORKDIR /var/www/html
+# Install Symfony Messenger Redis transport
+RUN composer require symfony/redis-messenger --no-scripts --no-interaction
 
-# Commande par défaut
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost/health || exit 1
+
+# Default command
 CMD ["php-fpm"]

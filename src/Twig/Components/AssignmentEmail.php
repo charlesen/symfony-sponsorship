@@ -5,6 +5,7 @@ namespace App\Twig\Components;
 use App\Service\Brevo;
 use App\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\LiveComponent\ValidatableComponentTrait;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
 
 /**
  * Composant Symfony UX Live Component pour gérer l'envoi d'invitations par e-mail.
@@ -69,16 +71,17 @@ class AssignmentEmail extends AbstractController
      * Cette méthode est appelée lors du clic sur le bouton "Supprimer".
      */
     #[LiveAction]
-    public function removeContact(array $data): void
+    public function removeContact(#[LiveArg] int $index): void
     {
-        $index = $data['index'] ?? null;
-        if (null !== $index && isset($this->contacts[$index])) {
+        if (isset($this->contacts[$index])) {
             unset($this->contacts[$index]);
+            // Réindexe le tableau pour éviter les trous
             $this->contacts = array_values($this->contacts);
-        }
 
-        if (empty($this->contacts)) {
-            $this->addContact();
+            // Si c'était le dernier contact, on en ajoute un nouveau vide
+            if (empty($this->contacts)) {
+                $this->addContact();
+            }
         }
     }
 
@@ -94,15 +97,20 @@ class AssignmentEmail extends AbstractController
         foreach ($this->contacts as $contact) {
 
             // Send email based on template            
-            $this->mailer->sendEmail(
-                $contact['email'],
-                $this->translator->trans('AssignmentEmail.email.subject'),
-                [
-                    'firstName' => $contact['firstName'],
-                    'url' => $this->urlGenerator->generate('register', [], UrlGeneratorInterface::ABSOLUTE_URL),
-                ],
-                'emails/assignment_email.html.twig'
-            );
+            try {
+                $this->mailer->sendEmail(
+                    $contact['email'],
+                    $this->translator->trans('AssignmentEmail.email.subject'),
+                    [
+                        'firstName' => $contact['firstName'],
+                        'url' => $this->urlGenerator->generate('register', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                    ],
+                    'emails/assignment_email.html.twig'
+                );
+            } catch (TransportExceptionInterface $e) {
+                dd($e);
+                $this->addFlash('error', $this->translator->trans('AssignmentEmail.email.error'));
+            }
 
             // Add contact to Brevo
             $this->brevo->addContact(

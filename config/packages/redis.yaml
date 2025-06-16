@@ -6,8 +6,4 @@ framework:
     # Configuration for Redis Messenger transport
     messenger:
         transports:
-            async_redis:
-                dsn: '%env(resolve:REDIS_DSN)%/messages'
-                options:
-                    use_notify: true
-                    check_delayed_interval: 60000
+            async_redis: '%env(resolve:REDIS_DSN)%/messages'

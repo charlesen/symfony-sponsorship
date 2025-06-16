@@ -19,8 +19,7 @@ final class SecurityController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface $logger
-    ) {
-    }
+    ) {}
     #[Route('/login_check', name: 'login_check')]
     public function index(): Response
     {
@@ -56,6 +55,7 @@ final class SecurityController extends AbstractController
                 ['email'],
                 [
                     'userLocale' => $userLocale,
+                    'from' => $this->getParameter('app.email.from'),
                 ]
             );
             // create a recipient for this user

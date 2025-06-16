@@ -6,6 +6,7 @@
 parameters:
   env(BREVO_API_KEY): ""
   env(BREVO_DEFAULT_LIST_ID): "1"
+  app.email.from: "%env(EMAIL_FROM)%"
 
 services:
   # default configuration for services in *this* file
