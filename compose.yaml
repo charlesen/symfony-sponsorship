@@ -12,8 +12,7 @@ services:
       - APP_ENV=${APP_ENV:-dev}
       - XDEBUG_MODE=${XDEBUG_MODE:-off}
       - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}?serverVersion=8.0.32&charset=utf8mb4
-      - MESSENGER_TRANSPORT_DSN=redis://redis:6379/messages
-      - REDIS_DSN=redis://redis:6379
+      - MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -22,8 +21,6 @@ services:
       - app_network
     depends_on:
       database:
-        condition: service_healthy
-      redis:
         condition: service_healthy
       mailpit:
         condition: service_healthy
@@ -119,21 +116,6 @@ services:
       - app_network
     depends_on:
       - database
-      - redis
-
-  redis:
-    image: redis:alpine
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
-    volumes:
-      - redis_data:/data
-    command: redis-server --appendonly yes
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
 
 networks:
   app_network:

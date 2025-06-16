@@ -7,7 +7,6 @@
             {{ 'AssignmentEmail.description'|trans }}
         </p>
 
-        {# ✔ On indique ici : submit->live#action:prevent ET data-live-action-param="sendInvitations" #}
         <form
             data-model="contacts"
             data-action="submit->live#action:prevent"
@@ -91,17 +90,34 @@
                 {% endfor %}
             </div>
 
-            {# ---- Boutons "Add contact" et "Send invitations" ---- #}
-            <div class="flex flex-col sm:flex-row justify-between gap-4 mt-6">
-                <button
-                    type="button"
-                    data-action="live#action"
-                    data-live-action-param="addContact"
-                    class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md 
-                           text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                    {{ 'Add contact'|trans }}
-                </button>
+            {# ---- Boutons d'action ---- #}
+            <div class="flex flex-col sm:flex-row justify-between gap-4 mt-6"
+                 data-controller="contact-picker"
+                 data-action="contacts-selected@window->contact-picker#handleContacts">
+                <div class="flex flex-wrap gap-2">
+                    <button
+                        type="button"
+                        data-action="contact-picker#pickContacts"
+                        class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md 
+                               text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        title="{{ 'Select from your device contacts'|trans }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        {{ 'Select from contacts'|trans }}
+                    </button>
+                    <button
+                        type="button"
+                        data-action="live#action"
+                        data-live-action-param="addContact"
+                        class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md 
+                               text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        {{ 'Add contact'|trans }}
+                    </button>
+                </div>
                 {# Le bouton "Send invitations" peut rester un bouton de type submit, inutile d’ajouter data-action ici #}
                 <button
                     type="submit"

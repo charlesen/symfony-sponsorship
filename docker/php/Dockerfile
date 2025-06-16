@@ -41,9 +41,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         zip \
     && docker-php-ext-configure zip
 
-# Install PECL extensions
-RUN pecl install redis && docker-php-ext-enable redis
-
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -52,19 +49,20 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn
 
-# Copy PHP configuration
-COPY docker/php/conf.d/ /usr/local/etc/php/conf.d/
+# Create PHP configuration directory
+RUN mkdir -p /usr/local/etc/php/conf.d
 
-# Remove duplicate opcache.ini to avoid conflicts
+# Remove any existing opcache.ini to avoid conflicts
 RUN rm -f /usr/local/etc/php/conf.d/opcache.ini
 
 # Set working directory and permissions
 WORKDIR /var/www
 RUN mkdir -p /var/www/.composer \
-    && chown -R www-data:www-data /var/www
-
-# Install Symfony Messenger Redis transport
-RUN composer require symfony/redis-messenger --no-scripts --no-interaction
+    && mkdir -p /var/www/var/sessions \
+    && chown -R www-data:www-data /var/www/.composer \
+    && chown -R www-data:www-data /var/www/html \
+    && chown -R www-data:www-data /var/www/var/sessions \
+    && chmod -R 770 /var/www/var/sessions
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

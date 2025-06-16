@@ -21,7 +21,6 @@ services:
       - app_network
     depends_on:
       - database
-      - redis
       - mailpit
 
   # Configuration pour Nginx avec des paramètres optimisés
@@ -77,26 +76,6 @@ services:
       retries: 5
       start_period: 60s
 
-  # Configuration pour Redis
-  redis:
-    image: redis:alpine
-    container_name: redis
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
-      - redis_conf:/usr/local/etc/redis
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
-    networks:
-      - app_network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
-
   # Configuration pour Adminer (interface d'administration de base de données)
   adminer:
     image: adminer:latest
@@ -125,11 +104,9 @@ services:
 # Définition des volumes persistants
 volumes:
   mysql_data:
-  redis_data:
   mailpit_data:
   xdebug_logs:
   mysql_logs:
-  redis_conf:
 
 # Définition des réseaux
 networks:

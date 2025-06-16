@@ -86,6 +86,58 @@ class AssignmentEmail extends AbstractController
     }
 
     /**
+     * Met à jour la liste des contacts.
+     * Cette méthode est appelée lors de la sélection des contacts via l'API Contact Picker.
+     */
+    #[LiveAction]
+    public function updateContacts(#[LiveArg] array $contacts): void
+    {
+        // Filtrage minimal
+        $this->contacts = array_filter(
+            $contacts,
+            fn($c) =>
+            isset($c['email']) && filter_var($c['email'], FILTER_VALIDATE_EMAIL)
+        );
+
+        if (empty($this->contacts)) {
+            $this->contacts = [['firstName' => '', 'email' => '']];
+        }
+    }
+
+
+    /**
+     * Ajoute des contacts à partir du sélecteur de contacts du navigateur.
+     * Cette méthode est appelée lorsqu'un utilisateur sélectionne des contacts via l'API Contact Picker.
+     */
+    #[LiveAction]
+    public function addContacts(array $contacts): void
+    {
+        foreach ($contacts as $contact) {
+            // Vérifier si le contact existe déjà dans la liste
+            $contactExists = false;
+            foreach ($this->contacts as $existingContact) {
+                if (strtolower($existingContact['email']) === strtolower($contact['email'])) {
+                    $contactExists = true;
+                    break;
+                }
+            }
+            
+            // Ajouter le contact s'il n'existe pas déjà
+            if (!$contactExists) {
+                $this->contacts[] = [
+                    'firstName' => $contact['firstName'],
+                    'email' => $contact['email']
+                ];
+            }
+        }
+        
+        // S'assurer qu'il y a toujours au moins un champ de contact vide
+        if (empty($this->contacts)) {
+            $this->addContact();
+        }
+    }
+
+    /**
      * Envoie des invitations par e-mail à tous les contacts.
      * Cette méthode est appelée lors du clic sur le bouton "Envoyer les invitations".
      */
@@ -94,10 +146,23 @@ class AssignmentEmail extends AbstractController
     {
         // Validation des données
         $this->validate();
-        foreach ($this->contacts as $contact) {
-
-            // Send email based on template            
+        
+        // Filtrer les contacts vides
+        $validContacts = array_filter($this->contacts, function($contact) {
+            return !empty($contact['email']) && !empty($contact['firstName']);
+        });
+        
+        if (empty($validContacts)) {
+            $this->addFlash('error', $this->translator->trans('Aucun contact valide à inviter.'));
+            return;
+        }
+        
+        $successCount = 0;
+        $errorCount = 0;
+        
+        foreach ($validContacts as $contact) {
             try {
+                // Send email based on template
                 $this->mailer->sendEmail(
                     $contact['email'],
                     $this->translator->trans('AssignmentEmail.email.subject'),
@@ -107,9 +172,21 @@ class AssignmentEmail extends AbstractController
                     ],
                     'emails/assignment_email.html.twig'
                 );
-            } catch (TransportExceptionInterface $e) {
-                dd($e);
-                $this->addFlash('error', $this->translator->trans('AssignmentEmail.email.error'));
+                
+                // Add contact to Brevo
+                $this->brevo->addContact(
+                    $contact['email'],
+                    [
+                        'firstName' => $contact['firstName'],
+                    ]
+                );
+                
+                $successCount++;
+                
+            } catch (\Exception $e) {
+                $errorCount++;
+                // Log the error but continue with other contacts
+                error_log(sprintf('Error sending invitation to %s: %s', $contact['email'], $e->getMessage()));
             }
 
             // Add contact to Brevo
