@@ -3,3 +3,5 @@ framework:
     # Put the unique name of your app here: the prefix seed
     # is used to compute stable namespaced cache keys.
     prefix_seed: symfony_sponsorship/cache
+    app: cache.adapter.filesystem
+    system: cache.adapter.system
