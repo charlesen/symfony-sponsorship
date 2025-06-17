@@ -1,6 +1,6 @@
 {# templates/components/assignment_email.html.twig #}
 <div {{ attributes }}>
-    <div class="space-y-6 max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <div class="space-y-6 max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md" data-controller="contact-picker">
         <h2 class="text-2xl font-semibold text-center text-gray-800 dark:text-gray-100">
             {{ 'AssignmentEmail.title'|trans }}
         </h2>
@@ -18,6 +18,20 @@
             class="space-y-6"
         >
             <div class="space-y-4">
+             <div class="flex justify-center mt-6 m-auto visible lg:hidden">
+                <button
+                    type="button"
+                    data-action="contact-picker#pickContacts"
+                    class="inline-flex items-center gap-2 p-4 border border-transparent text-sm font-medium rounded-md 
+                        text-white btn btn-primary btn-wide md:btn-md lg:btn-lg xl:btn-xl w-full max-w-full"
+                    title="{{ 'Select from your smart phone contacts'|trans }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+    </svg>
+
+                    {{ 'Select from your phone'|trans }}
+                </button>
+            </div>
                 {% for contact in contacts %}
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -80,26 +94,21 @@
                 {% endfor %}
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6"
-                 data-controller="contact-picker"
+            <div class="flex justify-center gap-4 mt-6"
                  data-action="contacts-selected@window->contact-picker#handleContacts">
 
-                <div class="flex flex-wrap gap-2">
-                    <button
-                        type="button"
-                        data-action="contact-picker#pickContacts"
-                        class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md 
-                               text-white btn btn-primary"
-                        title="{{ 'Select from your device contacts'|trans }}">
-                        {{ 'Select from contacts'|trans }}
-                    </button>
+                <div class="flex flex-wrap gap-2">                    
                     <button
                         type="button"
                         data-action="live#action"
                         data-live-action-param="addContact"
                         class="inline-flex items-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md 
                                text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                        {{ 'Add contact'|trans }}
+                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
+                        {{ 'Add manually'|trans }}
                     </button>
                 </div>
             </div>
@@ -110,6 +119,9 @@
                     class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md 
                            text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                </svg>
                     {{ 'Send invitations'|trans }}
                 </button>
             </div>

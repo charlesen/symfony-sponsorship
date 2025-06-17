@@ -176,7 +176,7 @@ about:
     success: "Invitations envoyées avec succès"
 
 Delete contact: "Supprimer le contact"
-Add contact: "Ajouter un contact"
+Add manually: "Ajouter manuellement"
 Send invitations: "Envoyer les invitations"
 
-Select from contacts: "Sélectionner parmi vos contacts"
+"Select from your phone": "Sélectionnez depuis votre téléphone"

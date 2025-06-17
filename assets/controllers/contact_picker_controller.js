@@ -1,4 +1,6 @@
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus';
+import { getComponent } from '@symfony/ux-live-component';
+
 
 export default class extends Controller {
   static targets = ["errorContainer"]
@@ -6,8 +8,11 @@ export default class extends Controller {
     targetComponent: String
   }
 
-  connect() {
-    console.log('Contact Picker Controller connected')
+  async initialize() {
+    const componentElt = this.element.closest('[data-controller~="live"]');
+    this.component = await getComponent(componentElt);
+
+    console.log('Contact Picker initialized :: Component ', this.component);
   }
 
   async pickContacts() {
@@ -41,10 +46,10 @@ export default class extends Controller {
         return
       }
 
-      this.dispatch('contacts-selected', {
-        detail: { contacts: formattedContacts },
-        prefix: 'contact-picker'
-      })
+      console.table('Contacts sélectionnés: ',contacts, formattedContacts);
+
+      // Envoyer les contacts au composant AssignmentEmail
+      this.component.action('updateContacts', {contacts: formattedContacts});
 
       this.showInfo(`${formattedContacts.length} contact(s) ajouté(s).`)
 
