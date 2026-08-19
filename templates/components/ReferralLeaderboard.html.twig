@@ -1,0 +1,121 @@
+<div {{ attributes }} class="w-full bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 shadow-sm">
+    {% set leaderboard = this.leaderboard %}
+    {% set currentUserRank = this.userRank %}
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-indigo-700 bg-indigo-50 dark:bg-indigo-900/40 dark:text-indigo-300 rounded-full mb-2">
+                <span>⚡ {{ 'Live Competition' | trans }}</span>
+            </span>
+            <h2 class="text-2xl font-black text-gray-900 dark:text-white">{{ 'Top Referral Champions' | trans }}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                {{ 'The most active ambassadors growing our ecosystem.' | trans }}
+            </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+            {% if currentUserRank > 0 %}
+                <div class="px-4 py-2 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 text-xs font-bold text-gray-700 dark:text-gray-300">
+                    <span>{{ 'Your Rank:' | trans }}</span>
+                    <span class="text-primary-600 dark:text-primary-400 font-extrabold text-sm ml-1">#{{ currentUserRank }}</span>
+                </div>
+            {% endif %}
+            <button 
+                type="button" 
+                data-action="live#action" 
+                data-live-action-param="refresh"
+                class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                title="{{ 'Refresh Leaderboard' | trans }}"
+            >
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    {# Leaderboard Table #}
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+            <thead>
+                <tr class="border-b border-gray-100 dark:border-gray-700 text-xs font-bold uppercase tracking-wider text-gray-400">
+                    <th class="py-3 px-4">{{ 'Rank' | trans }}</th>
+                    <th class="py-3 px-4">{{ 'Member' | trans }}</th>
+                    <th class="py-3 px-4">{{ 'Tier' | trans }}</th>
+                    <th class="py-3 px-4 text-center">{{ 'Referrals' | trans }}</th>
+                    <th class="py-3 px-4 text-right">{{ 'Points' | trans }}</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-700/50">
+                {% for item in leaderboard %}
+                    {% set user = item.user %}
+                    {% set tier = user.rewardTier %}
+                    <tr class="transition-colors {{ item.isCurrentUser ? 'bg-primary-50/50 dark:bg-primary-950/20 font-bold' : 'hover:bg-gray-50/50 dark:hover:bg-gray-900/30' }}">
+                        {# Rank #}
+                        <td class="py-3.5 px-4">
+                            {% if item.rank == 1 %}
+                                <span class="text-xl">🥇</span>
+                            {% elseif item.rank == 2 %}
+                                <span class="text-xl">🥈</span>
+                            {% elseif item.rank == 3 %}
+                                <span class="text-xl">🥉</span>
+                            {% else %}
+                                <span class="text-xs font-black text-gray-400">#{{ item.rank }}</span>
+                            {% endif %}
+                        </td>
+
+                        {# User Info #}
+                        <td class="py-3.5 px-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs uppercase shadow-sm">
+                                    {{ user.displayName|slice(0, 1) }}
+                                </div>
+                                <div>
+                                    <div class="font-bold text-gray-900 dark:text-white flex items-center gap-1.5">
+                                        <span>{{ user.displayName }}</span>
+                                        {% if item.isCurrentUser %}
+                                            <span class="text-[10px] px-1.5 py-0.2 bg-primary-600 text-white rounded">{{ 'You' | trans }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <span class="text-[11px] text-gray-400">Code: #{{ user.referrerCode }}</span>
+                                </div>
+                            </div>
+                        </td>
+
+                        {# Tier Badge #}
+                        <td class="py-3.5 px-4">
+                            {% if tier %}
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-bold rounded-full border {{ tier.badgeClass }}">
+                                    <span>{{ tier.icon }}</span>
+                                    <span>{{ tier.label }}</span>
+                                </span>
+                            {% else %}
+                                <span class="text-xs text-gray-400">-</span>
+                            {% endif %}
+                        </td>
+
+                        {# Referrals Count #}
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-xs font-black bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                {{ item.referralCount }}
+                            </span>
+                        </td>
+
+                        {# Points #}
+                        <td class="py-3.5 px-4 text-right">
+                            <span class="font-extrabold text-primary-600 dark:text-primary-400">
+                                {{ item.points }} pts
+                            </span>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-gray-400">
+                            {{ 'No referrers yet. Be the first to invite friends!' | trans }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

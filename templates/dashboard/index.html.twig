@@ -1,7 +1,31 @@
 {% extends 'dashboard/layout.html.twig' %}
 
-{% block title %}{{'Dashboard'|trans}}{% endblock %}
+{% block title %}{{ 'Referral & Sponsorship Dashboard' | trans }}{% endblock %}
 
 {% block content %}
-<twig:AssignmentEmail />
+<div class="space-y-8">
+    {# 1. Referral Link & 1-Click Social Sharing LiveComponent #}
+    {{ component('ReferralShareCard', { locale: locale|default('en') }) }}
+
+    {# 2. Gamified Milestone Tracker LiveComponent #}
+    {{ component('MilestoneTracker', { locale: locale|default('en') }) }}
+
+    {# 3. Live Competition Leaderboard LiveComponent #}
+    {{ component('ReferralLeaderboard', { locale: locale|default('en') }) }}
+
+    {# 4. Direct Email Invitations #}
+    <div class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 shadow-sm">
+        <div class="mb-6">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-900/40 dark:text-emerald-300 rounded-full mb-2">
+                <span>✉️ {{ 'Direct Email Invitations' | trans }}</span>
+            </span>
+            <h3 class="text-2xl font-black text-gray-900 dark:text-white">{{ 'Invite Colleagues & Contacts' | trans }}</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                {{ 'Send personalized invitation emails with your private referral link automatically attached.' | trans }}
+            </p>
+        </div>
+
+        <twig:AssignmentEmail />
+    </div>
+</div>
 {% endblock %}

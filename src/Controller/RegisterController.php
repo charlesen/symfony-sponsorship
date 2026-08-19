@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserForm;
+use App\Service\Brevo;
+use App\Service\ReferralService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
-use App\Form\UserForm;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use App\Service\Brevo;
 
 #[Route('/{_locale}')]
 final class RegisterController extends AbstractController
@@ -20,30 +21,47 @@ final class RegisterController extends AbstractController
         Request $request,
         TranslatorInterface $translator,
         EntityManagerInterface $entityManager,
-        Brevo $brevo
+        Brevo $brevo,
+        ReferralService $referralService
     ): Response {
-
         if ($this->getUser()) {
             return $this->redirectToRoute('dashboard_index');
         }
 
         $user = new User();
+        $user->setLocale($request->getLocale());
+        
         $form = $this->createForm(UserForm::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Generate a random referrer code
-            $referrerCode = bin2hex(random_bytes(4));
-            $user->setReferrerCode($referrerCode);
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Add user to Brevo
-            $brevo->addContact(
-                $user->getEmail(),
-                ['firstName' => $user->getFirstName()]
-            );
-            $this->addFlash('success', $translator->trans('You have been successfully registered! Please log in.'));
+            // Process referral attribution (cookie, session, or ?ref= parameter)
+            $referrer = $referralService->processReferral($user, $request);
+
+            // Add user to Brevo CRM
+            try {
+                $brevo->addContact(
+                    $user->getEmail(),
+                    [
+                        'FIRSTNAME' => $user->getFirstname(),
+                        'LASTNAME' => $user->getLastname(),
+                        'REFERRER_CODE' => $user->getReferrerCode(),
+                        'REFERRED_BY' => $referrer ? $referrer->getEmail() : null,
+                    ]
+                );
+            } catch (\Exception $e) {
+                // Log and continue
+            }
+
+            if ($referrer) {
+                $this->addFlash('success', $translator->trans('Account created with bonus welcome points from your referral! Check your email for magic login link.'));
+            } else {
+                $this->addFlash('success', $translator->trans('You have been successfully registered! Please log in with your email.'));
+            }
+
             return $this->redirectToRoute('login');
         }
 

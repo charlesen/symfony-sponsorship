@@ -1,0 +1,93 @@
+<div {{ attributes }} class="w-full bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 shadow-sm">
+    {% set progress = this.progress %}
+    {% set tiers = this.tiers %}
+    {% set user = this.user %}
+
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-amber-700 bg-amber-50 dark:bg-amber-900/40 dark:text-amber-300 rounded-full mb-2">
+                <span>🏆 {{ 'Gamification & Perks' | trans }}</span>
+            </span>
+            <h2 class="text-2xl font-black text-gray-900 dark:text-white">{{ 'Milestone Rewards & Tiers' | trans }}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                {{ 'Unlock exclusive roles, subscription discounts, and cash points as you refer friends.' | trans }}
+            </p>
+        </div>
+
+        {% if progress.nextTier %}
+            <div class="text-left md:text-right">
+                <span class="text-xs font-bold uppercase tracking-wider text-gray-400 block">{{ 'Next Unlock' | trans }}</span>
+                <span class="text-sm font-extrabold text-primary-600 dark:text-primary-400">
+                    {{ progress.neededCount }} {{ 'more referral(s) for' | trans }} {{ progress.nextTier.label }}
+                </span>
+            </div>
+        {% else %}
+            <div class="text-left md:text-right">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold text-purple-700 bg-purple-100 rounded-full">
+                    👑 {{ 'Max Tier Reached!' | trans }}
+                </span>
+            </div>
+        {% endif %}
+    </div>
+
+    {# Visual Progress Bar #}
+    <div class="mb-8">
+        <div class="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
+            <span>{{ 'Current Progress' | trans }} ({{ user ? user.referralsCount : 0 }} {{ 'referred' | trans }})</span>
+            <span>{{ progress.percentage }}%</span>
+        </div>
+        <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3.5 overflow-hidden p-0.5">
+            <div 
+                class="bg-gradient-to-r from-primary-600 to-indigo-600 h-2.5 rounded-full transition-all duration-500" 
+                style="width: {{ progress.percentage }}%"
+            ></div>
+        </div>
+    </div>
+
+    {# Tier Cards Grid #}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {% for item in tiers %}
+            {% set tier = item.tier %}
+            <div class="relative flex flex-col justify-between p-5 rounded-2xl border {{ item.isUnlocked ? 'border-emerald-300 bg-emerald-50/40 dark:border-emerald-800 dark:bg-emerald-950/20' : (item.isNext ? 'border-primary-500 bg-white dark:bg-gray-800 ring-2 ring-primary-500/20 shadow-md' : 'border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/40 opacity-70') }}">
+                
+                <div>
+                    {# Header with Icon and Badge #}
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-2xl">{{ tier.icon }}</span>
+                        {% if item.isUnlocked %}
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-bold text-emerald-700 bg-emerald-100 dark:bg-emerald-900/50 dark:text-emerald-300 rounded-full">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>{{ 'Unlocked' | trans }}</span>
+                            </span>
+                        {% elseif item.isNext %}
+                            <span class="inline-flex items-center px-2 py-0.5 text-xs font-bold text-primary-700 bg-primary-100 dark:bg-primary-900/50 dark:text-primary-300 rounded-full">
+                                🎯 {{ 'Next Goal' | trans }}
+                            </span>
+                        {% else %}
+                            <span class="inline-flex items-center px-2 py-0.5 text-xs font-bold text-gray-500 bg-gray-200 dark:bg-gray-700 rounded-full">
+                                🔒 {{ 'Locked' | trans }}
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <h3 class="text-base font-extrabold text-gray-900 dark:text-white">{{ tier.label }}</h3>
+                    <span class="text-xs font-bold text-primary-600 dark:text-primary-400 block mt-0.5">
+                        {{ tier.requiredReferrals }} {{ 'Referrals required' | trans }}
+                    </span>
+
+                    <p class="mt-3 text-xs text-gray-600 dark:text-gray-400 leading-relaxed min-h-[48px]">
+                        {{ tier.perkDescription | trans }}
+                    </p>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-gray-200/60 dark:border-gray-700 flex items-center justify-between text-xs">
+                    <span class="text-gray-500">{{ 'Milestone Bonus:' | trans }}</span>
+                    <span class="font-black text-amber-600 dark:text-amber-400">+{{ tier.bonusPoints }} pts</span>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+</div>

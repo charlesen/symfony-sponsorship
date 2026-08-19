@@ -26,7 +26,8 @@ class AssignmentEmail extends AbstractController
         private Mailer $mailer,
         private Brevo $brevo,
         private TranslatorInterface $translator,
-        private UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
+        private \App\Service\ReferralService $referralService
     ) {}
 
     #[LiveProp(writable: true)]
@@ -125,13 +126,17 @@ class AssignmentEmail extends AbstractController
             }
             $seenEmails[] = $email;
 
+            /** @var \App\Entity\User|null $currentUser */
+            $currentUser = $this->getUser();
+            $inviteUrl = $currentUser ? $this->referralService->getReferralUrl($currentUser, $currentUser->getLocale()) : $this->urlGenerator->generate('register', [], UrlGeneratorInterface::ABSOLUTE_URL);
+
             try {
                 $this->mailer->sendEmail(
                     $contact['email'],
                     $this->translator->trans('AssignmentEmail.email.subject'),
                     [
                         'firstName' => $contact['firstName'],
-                        'url' => $this->urlGenerator->generate('register', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                        'url' => $inviteUrl,
                     ],
                     'emails/assignment_email.html.twig'
                 );

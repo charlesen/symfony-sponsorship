@@ -1,55 +1,37 @@
-# DEVBOOK
+# 📘 DEVBOOK - Symfony Sponsorship
 
-## État actuel du projet
+> Dernière mise à jour : 19 août 2026
 
-### 1. Authentification
-- [x] Système de connexion par email avec magic link
+## 🔍 État des fonctionnalités
+
+### 1. Authentification & Sécurité
+- [x] Système de connexion par email avec magic link sans mot de passe
 - [x] Gestion des utilisateurs avec entité User
-- [x] Envoi d'emails avec Symfony Mailer
-- [x] Internationalisation (traductions)
+- [x] Envoi d'emails avec Symfony Mailer / Brevo
+- [x] Internationalisation (en / fr)
 
-### 2. Structure de base
-- [x] Système de routage avec localisation
-- [x] Contrôleurs pour la gestion des pages et du tableau de bord
-- [x] Entités de base (User, Page)
-- [x] Système de slugs pour les URLs
+### 2. Moteur de Parrainage & Viralité (Phase 2)
+- [x] Intercepteur d'attribution `ReferralTrackingListener` (`?ref=CODE_PARRAIN`, cookie 30 jours, session)
+- [x] Service central `ReferralService` (attribution, calcul des points, URL uniques, partage viral)
+- [x] Protection anti-fraude (auto-parrainage, même adresse IP)
+- [x] Enum `RewardTier` avec 4 paliers gamifiés (Bronze, Silver, Gold, Platinum)
 
-## Prochaines étapes (24h)
+### 3. Composants LiveComponent & Partage Social (Phase 2)
+- [x] `<twig:ReferralShareCard />` : lien d'invitation avec copie Stimulus et 5 boutons de partage en 1 clic (WhatsApp, X, LinkedIn, Telegram, Email)
+- [x] `<twig:MilestoneTracker />` : jauge de progression vers le palier supérieur et catalogue de récompenses
+- [x] `<twig:ReferralLeaderboard />` : classement en temps réel des meilleurs ambassadeurs avec podium et rang personnel
+- [x] `<twig:AssignmentEmail />` : invitation par email avec lien de parrainage automatiquement injecté
 
-### J-1 : Matin (4h)
-1. **Tableau de bord utilisateur (2h)**
-   - [ ] Créer l'interface du tableau de bord
-   - [ ] Afficher les statistiques de base
-   - [ ] Générer une URL de parrainage unique
+### 4. Infrastructure & Base de données
+- [x] Migration Doctrine `Version20260819163000.php` pour les points, clics et index unique
+- [x] Fixtures `AppFixtures` avec 6 comptes de test et 18 filleuls de simulation
+- [x] Compilation Webpack Encore et styles Tailwind validés
 
-2. **Système de missions (2h)**
-   - [ ] Créer l'entité Mission avec ses propriétés
-   - [ ] Implémenter le CRUD pour les missions
-   - [ ] Créer les fixtures pour les missions de base
+---
 
-### J-1 : Après-midi (4h)
-3. **Système de parrainage (2h)**
-   - [ ] Implémenter la logique de parrainage
-   - [ ] Créer la page d'invitation
-   - [ ] Suivi des parrainages
+## 🚀 Prochaines étapes
 
-4. **Intégration Brevo (2h)**
-   - [ ] Configurer le SDK Brevo
-   - [ ] Synchroniser les utilisateurs avec Brevo
-   - [ ] Mettre à jour les attributs personnalisés
-
-### J-1 : Soir (4h)
-5. **Tests et optimisation (2h)**
-   - [ ] Écrire des tests unitaires
-   - [ ] Optimiser les requêtes
-   - [ ] Vérifier la sécurité
-
-6. **Finalisation (2h)**
-   - [ ] Documentation utilisateur
-   - [ ] Tests d'acceptation
-   - [ ] Déploiement
-
-## Notes techniques
-- Utiliser les événements Symfony pour déclencher les actions de parrainage
-- Implémenter un système de file d'attente pour les appels API vers Brevo
-- Mettre en cache les données fréquemment accédées
+### Phase 3 : Intégration Croisée & Documentation Écosystème
+- [ ] Connecter le système de parrainage dans `symfony-saas-starter`
+- [ ] Packaging en bundle Composer réutilisable (`charlesen/sponsorship-bundle`)
+- [ ] Stratégie de diffusion "Build in Public" et génération de leads

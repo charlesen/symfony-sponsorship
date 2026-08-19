@@ -1,211 +1,91 @@
-# Symfony Sponsorship
+# 🌟 Symfony Sponsorship
 
-Une application Symfony pour gérer un système de parrainage moderne avec authentification par magic link, missions personnalisables et intégration Brevo.
+[![Symfony 7.2](https://img.shields.io/badge/Symfony-7.2-black.svg?style=for-the-badge&logo=symfony)](https://symfony.com)
+[![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4.svg?style=for-the-badge&logo=php)](https://php.net)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC.svg?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![UX Turbo](https://img.shields.io/badge/Symfony%20UX-Turbo%20%2B%20Live-673AB7.svg?style=for-the-badge)](https://ux.symfony.com)
+[![Brevo CRM](https://img.shields.io/badge/Brevo-CRM%20Sync-0B996F.svg?style=for-the-badge)](https://brevo.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-## Fonctionnalités principales
-- Authentification sans mot de passe (magic link par email)
-- Tableau de bord utilisateur avec missions, points, statut
-- Système de parrainage (URL unique, suivi des filleuls)
-- Missions personnalisables (BDD)
-- Intégration Brevo (envoi de contacts/actions)
-- Environnement de développement conteneurisé avec Docker
+> The plug-and-play viral referral & sponsorship engine for Symfony 7.2. Launch high-converting viral loops, gamified milestone tiers, live leaderboards, and magic link authentication in minutes.
 
-## Prérequis
+---
 
-- [Docker](https://www.docker.com/get-started) (version 20.10.0 ou supérieure)
-- [Docker Compose](https://docs.docker.com/compose/install/) (version 1.29.0 ou supérieure)
-- [Git](https://git-scm.com/)
+## ✨ Features
 
-## Installation avec Docker (recommandé)
+### 🚀 Automated Viral Attribution Loop
+- **Smart Link Interceptor (`?ref=CODE`)**: Captures referral links with a 30-day secure HTTP-Only cookie & session tracking ([`ReferralTrackingListener.php`](src/EventListener/ReferralTrackingListener.php)).
+- **Automatic Attribution**: Automatically links new signups to their referrer upon registration ([`ReferralService.php`](src/Service/ReferralService.php)).
+- **Anti-Fraud Engine**: Prevents self-referral, same-IP spamming, and temporary emails.
 
-1. **Cloner le dépôt**
+### 🏆 Gamification & Milestone Tiers
+- **4 Progressive Reward Tiers** ([`RewardTier.php`](src/Enum/RewardTier.php)):
+  - 🥉 **Bronze Supporter** (1 referral): 50 bonus points & early access.
+  - 🥈 **Silver Champion** (3 referrals): 200 bonus points & 10% discount promo code.
+  - 🥇 **Gold Ambassador** (5 referrals): 500 bonus points & 1 month free PRO access.
+  - 👑 **Platinum VIP** (10+ referrals): 1,500 bonus points & lifetime VIP perks.
+
+### ⚡ Symfony UX LiveComponents (Zero JS Build Fatigue)
+- **`<twig:ReferralShareCard />`**:
+  - Unique personal invite link with 1-click clipboard copy.
+  - 1-click instant social share buttons (*WhatsApp, X / Twitter, LinkedIn, Telegram, Email*).
+  - Real-time stat counters (*Clicks, Friends Joined, Points Earned*).
+- **`<twig:MilestoneTracker />`**:
+  - Visual gamified progress bar towards the next reward unlock.
+- **`<twig:ReferralLeaderboard />`**:
+  - Real-time competitive leaderboard with medals (🥇, 🥈, 🥉) and personal rank badge.
+- **`<twig:AssignmentEmail />`**:
+  - Batch personalized invitation emails with embedded referral URLs.
+
+### 🔒 Passwordless Magic Link & CRM
+- Zero passwords: instantaneous login link delivery via Symfony Mailer / Mailpit.
+- Automated 2-way contact & custom attribute synchronization with **Brevo CRM**.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: PHP 8.2+, Symfony 7.2
+- **Front-end**: Tailwind CSS, DaisyUI, Webpack Encore, Hotwired Stimulus, Symfony UX LiveComponents
+- **Database**: Doctrine ORM 3.x, MySQL 8.0, Redis
+- **Integrations**: Brevo API SDK (`getbrevo/brevo-php`)
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the repository
 ```bash
-git clone https://github.com/charlesen/symfony-sponsorship-bundle.git
-cd symfony-sponsorship-bundle
+git clone https://github.com/charlesen/symfony-sponsorship.git
+cd symfony-sponsorship
 ```
 
-2. **Configurer l'environnement**
+### 2. Start with Docker
 ```bash
-# Copier le fichier d'exemple de configuration
-cp .env.local.example .env.local
-
-# Éditer le fichier .env.local selon vos besoins
-# nano .env.local
-```
-
-3. **Démarrer l'environnement de développement**
-```bash
-# Rendre le script exécutable
 chmod +x docker/scripts/dev.sh
-
-# Lancer le script de développement
 ./docker/scripts/dev.sh
 ```
 
-Le script va :
-- Démarrer tous les services nécessaires (Nginx, PHP, MySQL, Redis, Mailpit, Adminer)
-- Configurer la base de données
-- Installer les dépendances Composer et Yarn
-- Compiler les assets
-- Exécuter les migrations de base de données
-- Charger les données de test
+### 3. Access Services
+- 🌐 **Application**: [http://localhost:8080](http://localhost:8080)
+- 📧 **Mailpit**: [http://localhost:8025](http://localhost:8025)
+- 🗄️ **Adminer**: [http://localhost:8081](http://localhost:8081)
 
-4. **Accéder à l'application**
-- Application : http://localhost:8080
-- Adminer (Gestion BDD) : http://localhost:8081
-- Mailpit (Visualisation des emails) : http://localhost:8025
+---
 
-## Installation manuelle (sans Docker)
+## 🔑 Demo Test Accounts
 
-1. **Cloner le dépôt**
-```bash
-git clone https://github.com/charlesen/symfony-sponsorship-bundle.git
-cd symfony-sponsorship-bundle
-```
+| Account | Email | Referrer Code | Referrals | Points | Tier |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Alice Dupont** | `alice@example.com` | `ALICE100` | 12 | 1,850 pts | 👑 **Platinum VIP** |
+| **Bob Martin** | `bob@example.com` | `BOB20000` | 6 | 850 pts | 🥇 **Gold Ambassador** |
+| **Chloé Bernard** | `chloe@example.com` | `CHLOE300` | 3 | 350 pts | 🥈 **Silver Champion** |
+| **David Petit** | `david@example.com` | `DAVID400` | 1 | 70 pts | 🥉 **Bronze Supporter** |
+| **John Doe** | `user@example.com` | `JOHNDOE1` | 0 | 20 pts | Member |
+| **Admin** | `admin@example.com` | `ADMIN001` | - | 500 pts | **ROLE_ADMIN** |
 
-2. **Installer les dépendances**
-```bash
-composer install
-npm install
-```
+---
 
-3. **Configurer l'environnement**
-- Copier `.env` en `.env.local` et adapter les variables (BDD, mailer, Brevo...)
+## 📄 License
 
-4. **Créer la base de données et les migrations**
-```bash
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate
-```
-
-5. **Compiler les assets**
-```bash
-npm run dev
-```
-
-6. **Lancer le serveur Symfony**
-```bash
-symfony serve -d
-```
-
-## Services disponibles avec Docker
-
-- **Nginx** : Serveur web (port 8080)
-- **PHP 8.2** : Interpréteur PHP avec Xdebug
-- **MySQL 8.0** : Base de données (port 3306)
-- **Redis** : Cache et sessions (port 6379)
-- **Mailpit** : Serveur SMTP de test avec interface web (ports 1025/8025)
-- **Adminer** : Interface d'administration de base de données (port 8081)
-
-## Commandes utiles
-
-### Avec Docker
-
-```bash
-# Démarrer les conteneurs en arrière-plan
-docker-compose up -d
-
-# Arrêter les conteneurs
-docker-compose down
-
-# Voir les logs des conteneurs
-docker-compose logs -f
-
-# Accéder au conteneur PHP
-docker-compose exec php bash
-
-# Exécuter des commandes Symfony
-docker-compose exec -u www-data php bin/console cache:clear
-
-# Exécuter les tests
-docker-compose exec -u www-data php php bin/phpunit
-```
-
-### Sans Docker
-
-```bash
-# Vider le cache
-php bin/console cache:clear
-
-# Exécuter les migrations
-php bin/console doctrine:migrations:migrate
-
-# Charger les données de test
-php bin/console doctrine:fixtures:load
-
-# Lancer les tests
-php bin/phpunit
-```
-
-## Configuration
-
-### Variables d'environnement importantes
-
-- `APP_ENV` : Environnement d'exécution (dev, test, prod)
-- `APP_SECRET` : Clé secrète pour les tokens CSRF
-- `DATABASE_URL` : URL de connexion à la base de données
-- `MAILER_DSN` : Configuration du serveur SMTP
-- `BREVO_API_KEY` : Clé API pour l'intégration Brevo
-- `REDIS_DSN` : URL de connexion à Redis
-
-### Configuration de la base de données
-
-L'application utilise MySQL 8.0 par défaut. Les paramètres de connexion peuvent être modifiés dans le fichier `.env.local`.
-
-### Configuration du mailer
-
-En développement, les emails sont capturés par Mailpit et peuvent être visualisés à l'adresse http://localhost:8025.
-
-Pour la production, configurez un véritable serveur SMTP dans le fichier `.env.local`.
-
-## Dépannage
-
-### Problèmes de permissions
-
-Si vous rencontrez des problèmes de permissions avec les dossiers `var/` ou `public/uploads`, exécutez :
-
-```bash
-# Sous Linux/macOS
-chmod -R 777 var/
-chmod -R 777 public/uploads
-
-# Avec Docker
-docker-compose exec php chown -R www-data:www-data var/
-docker-compose exec php chown -R www-data:www-data public/uploads
-```
-
-### Problèmes de base de données
-
-Si la base de données ne se crée pas correctement :
-
-```bash
-# Supprimer et recréer la base de données
-docker-compose exec php bin/console doctrine:database:drop --force
-docker-compose exec php bin/console doctrine:database:create
-
-# Exécuter les migrations
-docker-compose exec php bin/console doctrine:migrations:migrate --no-interaction
-```
-
-## Contribution
-
-Les étapes de développement sont détaillées dans le fichier `DEVBOOK.md`.
-
-1. Créez une branche pour votre fonctionnalité : `git checkout -b ma-nouvelle-fonctionnalite`
-2. Committez vos modifications : `git commit -am 'Ajout d\'une nouvelle fonctionnalité'`
-3. Poussez vers la branche : `git push origin ma-nouvelle-fonctionnalite`
-4. Créez une Pull Request
-
-## Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## Auteurs
-
-- Charles-Édouard LAVIE (https://github.com/charlesen)
-
-## Remerciements
-
-- L'équipe de développement de Symfony
-- La communauté Open Source
-- Tous les contributeurs qui ont rendu ce projet possible
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.

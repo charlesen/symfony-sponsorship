@@ -2,7 +2,9 @@
 
 namespace App\Controller\Dashboard;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -12,8 +14,15 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class DashboardController extends AbstractController
 {
     #[Route('', name: 'index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        return $this->render('dashboard/index.html.twig');
+        /** @var User $user */
+        $user = $this->getUser();
+        $locale = $request->getLocale();
+
+        return $this->render('dashboard/index.html.twig', [
+            'user' => $user,
+            'locale' => $locale,
+        ]);
     }
 }
